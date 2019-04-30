@@ -157,6 +157,10 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
 
     function drawTargets() {
         const targetSet = getTargetSet(graph.nodes, refCentrality, span);
+        if(targetSet.length < 1){
+            $('.result-desc').text("There is no matched condition with a span of " + span);
+            userTest(testIdx+1);
+        }
         const randTargetIdx = parseInt(Math.random() * targetSet.length);
         const targetNodesIdx = targetSet[randTargetIdx];
 
