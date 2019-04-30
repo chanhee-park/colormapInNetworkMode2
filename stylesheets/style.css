@@ -1,0 +1,240 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+body {
+    width: 100%;
+    min-width: 980px;
+    max-width: 1920px;
+    min-height: 720px;
+    position: relative;
+    margin: 0;
+}
+
+a {
+    text-decoration: none
+}
+
+#app {
+    width: 100%;
+}
+
+.login-zone {
+    width: 100%;
+    height: 50px;
+    padding: 10px 50px;
+    line-height: 30px;
+    display: flex;
+    font-size: 12px;
+}
+
+.login {
+    box-sizing: border-box;
+    display: inline-block;
+    height: 100%;
+}
+
+.login.info {
+    flex: 8;
+}
+
+.login#input-name {
+    flex: 1;
+}
+
+.login#login-button {
+    text-align: center;
+    cursor: pointer;
+    flex: 1;
+    background: #fa9;
+}
+
+.test-zone {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    padding: 0 48px 48px 48px;
+}
+
+.title {
+    font-size: 24px;
+    line-height: 36px;
+    height: 36px;
+}
+
+.content {
+    padding: 12px;
+}
+
+.content .sub-title {
+    font-size: 18px;
+    line-height: 24px;
+    height: 24px;
+}
+
+.content .description {
+    font-size: 16px;
+    line-height: 24px;
+    color: #555;
+    padding: 4px 0;
+    min-height: 32px;
+}
+
+.content .description.right {
+    float: right;
+    flex: 1;
+    padding: 0 50px;
+}
+
+.button {
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: black;
+    background: #fa9;
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    position: absolute;
+    bottom: 20px !important;
+    cursor: pointer;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    transition: background-color .3s;
+}
+
+.back-page-button {
+    left: 30px;
+}
+
+.next-page-button {
+    right: 30px;
+}
+
+.start-button {
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    top: 300px;
+    left: 350px;
+}
+
+.task-complete-button {
+    left: calc(50% - 100px);
+    width: 100px;
+}
+
+.button:hover {
+    background: #f98;
+}
+
+.button:active {
+    background: #fba;
+}
+
+.image-wrapper {
+    margin: 10px 0;
+    display: inline;
+}
+
+.image-wrapper > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.render-area {
+    display: inline-block;
+    width: 90vh;
+    height: 90vh;
+    max-width: 100vw - 400px;
+    margin: 0 !important;
+}
+
+.render-area > svg#network {
+    width: 100%;
+    height: 100%;
+}
+
+.desc-area {
+    display: block;
+    width : 380px;
+    float: left;
+    font-size: 16px;
+    color : #333;
+    font-weight: 100
+}
+
+.task-desc , .result-desc {
+    padding : 5px 5px 5px 25px;
+}
+
+svg#legend {
+    width: 100%;
+}
+
+circle {
+    border: 5px solid black;
+}
+
+circle.source {
+    stroke: 3px solid blue;
+}
+
+circle.source:hover {
+    cursor: pointer;
+}
+
+.flex-zone {
+    display: flex;
+}
+
+.empty-flex-1 {
+    flex: 1;
+}
+
+.flex-4 {
+    flex: 4;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.description b {
+    color: #700
+}
+
+text {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.button.fix {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+}
+
+.thankyou {
+    font-size: 42px;
+    text-align: center;
+    margin-top: 15%;
+}
