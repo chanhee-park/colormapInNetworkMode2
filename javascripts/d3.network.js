@@ -77,6 +77,8 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
      * Draw Color Legend
      */
     function drawColorLegend() {
+        let w_ratio = svgHTML.width.baseVal.value / 300;
+
         legendSvg.append('text')
             .text('low')
             .attrs({
@@ -88,12 +90,11 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
         legendSvg.append('text')
             .text('high')
             .attrs({
-                x: legendX + 255 * 1.5,
+                x: legendX + 255 * w_ratio,
                 y: legendY - 5,
                 'text-anchor': 'middle',
                 'alignment-baseline': 'ideographic'
             });
-
 
         for (let i = 0; i <= 255; i++) {
             const relative = i / 255;
@@ -101,7 +102,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
             const color = getHexColor(virtualCentrality);
             legendSvg.append('rect')
                 .attrs({
-                    x: legendX + i * 1.5,
+                    x: legendX + i * w_ratio,
                     y: legendY,
                     width: 5,
                     height: legendSize,
@@ -111,7 +112,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
                 legendSvg.append('text')
                     .text(virtualCentrality.toFixed(2))
                     .attrs({
-                        x: legendX + i * 1.5,
+                        x: legendX + i * w_ratio,
                         y: legendY + legendSize + 15,
                         'text-anchor': 'middle',
                         'alignment-baseline': 'central'

@@ -158,12 +158,16 @@ a {
     width: 83vh;
     height: 83vh;
     max-width: 100vw - 400px;
-    margin: 0 !important;
+    margin: 0 0 0 calc(50vw - 50vh) !important;
 }
 
 .render-area > svg#network {
     width: 100%;
     height: 100%;
+}
+
+svg#legend {
+    width: 100%;
 }
 
 .desc-area {
@@ -172,12 +176,11 @@ a {
     font-size: 16px;
     color : #333;
     font-weight: 100;
-    padding : 50px 20px
+    padding : 50px 20px;
+    font-size : 12px;
 }
 
-svg#legend {
-    width: 520px;
-}
+
 
 .task-desc , .result-desc {
     padding : 5px 5px 5px 25px;
