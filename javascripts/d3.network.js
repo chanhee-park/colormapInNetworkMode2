@@ -20,19 +20,19 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
         legendSvg = d3.select("svg#legend"),
         svgWidth = svgHTML.width.baseVal.value,
         svgHeight = svgHTML.height.baseVal.value,
-        width = (dataName === 'jazz') ? svgHeight * 0.93 : svgHeight * 0.8,
-        height = (dataName === 'jazz') ? svgHeight * 0.93 : svgHeight * 0.8;
+        width = (dataName === 'jazz') ? svgHeight * 0.93 : svgHeight * 0.95,
+        height = (dataName === 'jazz') ? svgHeight * 0.93 : svgHeight * 0.95;
 
     svg.selectAll("*").remove();
     legendSvg.selectAll("*").remove();
 
     // No Magic Number !
-    const nodeRadius = (dataName === 'jazz') ? 3 : 5,
+    const nodeRadius = (dataName === 'jazz') ? 4 : 6,
         linkColor = '#000',
         linkOpacity = 0.15,
         legendX = 25,
         legendY = 50,
-        legendSize = 15;
+        legendSize = 25;
 
     let maxAxisVal = undefined,
         minCentralityVal = undefined,
@@ -101,9 +101,9 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
             const color = getHexColor(virtualCentrality);
             legendSvg.append('rect')
                 .attrs({
-                    x: legendX + i,
+                    x: legendX + i * 1.5,
                     y: legendY,
-                    width: 4,
+                    width: 5,
                     height: legendSize,
                     fill: color,
                 });
@@ -111,7 +111,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
                 legendSvg.append('text')
                     .text(virtualCentrality.toFixed(2))
                     .attrs({
-                        x: legendX + i,
+                        x: legendX + i * 1.5,
                         y: legendY + legendSize + 15,
                         'text-anchor': 'middle',
                         'alignment-baseline': 'central'
@@ -157,6 +157,8 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
 
     function drawTargets() {
         const targetSet = getTargetSet(graph.nodes, refCentrality, span);
+        console.log(targetSet);
+        
         if(targetSet.length < 1){
             $('.result-desc').text("There is no matched condition with a span of " + span);
             userTest(testIdx+1);
