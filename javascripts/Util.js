@@ -59,5 +59,17 @@ const Util = new function () {
         // saveAs(blob, filename+".json");
     };
 
+    this.shuffle = (arr) => {
+        const len = arr.length;
+        for (let i = 0; i < len; i++) {
+            const fromIdx = Math.floor(Math.random() * len);
+            const toIdx = Math.floor(Math.random() * len);
+            const temp = arr[fromIdx]
+            arr[fromIdx] = arr[toIdx]
+            arr[toIdx] = temp
+        }
+        return arr;
+    }
+
     return this;
 };

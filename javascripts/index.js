@@ -8,7 +8,7 @@ function userTest(testIdx) {
     }
     const q = questions[testIdx];
     setTimeout(function () {
-        drawGraph(q[0],q[1],q[2],q[3], testIdx); // data, cnet, color, span
+        drawGraph(q[0], q[1], q[2], q[3], q[4], testIdx); // data, cnet, color, span, refPoint
     }, 1000);
 }
 
@@ -16,28 +16,33 @@ setTimeout(function () {
     userTest(0);
 }, 1000);
 
-function getTargetSet(nodes, centrality, span) {
+
+function getTargetSet(nodes, centrality, spanRatio, refRatio) {
     const ret = [];
     const min = getMinValue(nodes, centrality);
     const max = getMaxValue(nodes, centrality);
-    const distance = getDistance(min, max, span);
-    const errRange = 0.01 * (max - min); // -1% ~ +1%
+    const spanDistance = getDistance(min, max, spanRatio);
     const len = nodes.length;
     for (let i = 0; i < len - 2; i++) {
         for (let j = i + 1; j < len - 1; j++) {
             const sourceMin = Math.min(nodes[i][centrality], nodes[j][centrality]);
             const sourceMax = Math.max(nodes[i][centrality], nodes[j][centrality]);
             const sourceDistance = sourceMax - sourceMin;
-            if (!isFloatInRange(distance, sourceDistance, errRange)) continue;
             for (let k = j; k < len; k++) {
                 const targetVal = nodes[k][centrality];
+                if (sourceDistance < refRatio[0] && refRatio[1] < sourceDistance) continue;
                 if (sourceMin < targetVal && targetVal < sourceMax) {
-                    ret.push([i, j, k]);
+                    const info = {
+                        nodes : [i, j, k],
+                        error: Math.abs(sourceDistance - spanDistance)
+                    }
+                    ret.push(info);
                 }
             }
         }
     }
-    return ret;
+    const sorted = _.sortBy(ret, 'error');
+    return sorted[0].nodes;
 }
 
 function getMinObj(objs, key) {
@@ -87,14 +92,16 @@ function isFloatInRange(source, target, errRange) {
 
 function makeQuestionList() {
     const questions = [];
-    _.forEach(dataNames, (data)=>{
-        _.forEach(centralityNames, (cent)=>{
-            _.forEach(colorMapNames, (color)=>{
-                _.forEach(spans, (span)=>{
-                    questions.push([data, cent, color, span]);
+    _.forEach(dataNames, (data) => {
+        _.forEach(centralityNames, (cent) => { 
+            _.forEach(colorMapNames, (color) => {
+                _.forEach(spans, (span) => {
+                    _.forEach(referencePoint, (ref) => {
+                        questions.push([data, cent, color, span, ref]);
+                    })
                 })
             })
         })
     })
-    return questions;
+    return Util.shuffle(questions);
 }

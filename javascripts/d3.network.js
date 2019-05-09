@@ -1,4 +1,4 @@
-function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
+function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testIdx) {
     const startTime = Util.getTime();
     const graph = Data.getData(dataName);
     const colorMap = Constant.colorMaps[colorMapName];
@@ -10,8 +10,8 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
 
     if (refCentrality === 'random') setRandCentrality();
 
-    console.log(dataName, refCentrality, colorMapName, span);
-    $('.task-desc').text((testIdx+1) + "/108: " + dataName + ", " + refCentrality + ", " +  colorMapName + ", " + span);
+    console.log(dataName, refCentrality, colorMapName, refPoint, span);
+    $('.task-desc').text((testIdx+1) + "/324");
     $('.result-desc').text("");
 
     // Set Render Size
@@ -20,25 +20,25 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
         legendSvg = d3.select("svg#legend"),
         svgWidth = svgHTML.width.baseVal.value,
         svgHeight = svgHTML.height.baseVal.value,
-        width = (dataName === 'jazz') ? svgHeight * 0.93 : svgHeight * 0.95,
-        height = (dataName === 'jazz') ? svgHeight * 0.93 : svgHeight * 0.95;
+        width = svgHeight * 0.9;
+        height = svgHeight * 0.9;
 
     svg.selectAll("*").remove();
     legendSvg.selectAll("*").remove();
 
     // No Magic Number !
-    const nodeRadius = (dataName === 'jazz') ? 4 : 6,
+    const nodeRadius = (dataName === 'jazz') ? 5 : 7,
         linkColor = '#000',
         linkOpacity = 0.15,
         legendX = 25,
         legendY = 50,
-        legendSize = 25;
+        legendSize = 27;
 
     let maxAxisVal = undefined,
         minCentralityVal = undefined,
         maxCentralityVal = undefined;
 
-    let sourceMin, sourceMax, target, correctNode = undefined;
+    let correctNode = undefined;
 
     setAxisInfo();
     drawColorLegend();
@@ -157,30 +157,28 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     }
 
     function drawTargets() {
-        const targetSet = getTargetSet(graph.nodes, refCentrality, span);
-        console.log(targetSet);
-        
-        if(targetSet.length < 1){
-            $('.result-desc').text("There is no matched condition with a span of " + span);
-            userTest(testIdx+1);
-        }
-        const randTargetIdx = parseInt(Math.random() * targetSet.length);
-        const targetNodesIdx = targetSet[randTargetIdx];
+        const targetIds = getTargetSet(graph.nodes, refCentrality, span, refPoint);
 
         const targetNodes = sortBy([
-            graph.nodes[targetNodesIdx[0]],
-            graph.nodes[targetNodesIdx[1]],
-            graph.nodes[targetNodesIdx[2]]
+            graph.nodes[targetIds[0]],
+            graph.nodes[targetIds[1]],
+            graph.nodes[targetIds[2]]
         ], refCentrality);
 
-        sourceMin = targetNodes[0];
-        sourceMax = targetNodes[2];
-        target = targetNodes[1];
+        const sourceMin = targetNodes[0];
+        const sourceMax = targetNodes[2];
+        const target = targetNodes[1];
 
         const minDiff = target[refCentrality] - sourceMin[refCentrality];
         const maxDiff = sourceMax[refCentrality] - target[refCentrality];
         correctNode = minDiff < maxDiff ? sourceMin : sourceMax;
 
+        $('.task-nodes-desc').html(
+            'nodes:<br>' 
+            + sourceMin[refCentrality] + '<br>' 
+            + sourceMax[refCentrality] + '<br>'
+            + target[refCentrality]);
+            
         drawNode(sourceMin, 'source');
         drawNode(sourceMax, 'source');
         drawNode(target, 'target');
@@ -256,7 +254,13 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
         const elapsedTime = Util.getTimeDiffFrom(startTime);
         const isCorrect = userAnswerNode === correctNode;
         console.log("result : ", elapsedTime, isCorrect);
-        $('.result-desc').text("result: " + elapsedTime + ", " + isCorrect);
+
+        const classToAdd = isCorrect ? "correct" : "wrong";
+        const classToRemove = ! isCorrect ? "correct" : "wrong";
+
+        $('.result-desc').text(elapsedTime + ", " + classToAdd)
+        .removeClass(classToRemove).addClass(classToAdd);
+        
         TEST_RESULT.push({
             dataName: dataName,
             refCentrality: refCentrality, 

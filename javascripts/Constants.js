@@ -16,11 +16,12 @@ const Constant = {
     },
 };
 
-
 const dataNames = ["lesmis", "football", "jazz"];
 const centralityNames = ["deg_log", "btw", "random"];
 const colorMapNames = ['single_blue', 'rainbow', 'divergent_red_blue', 'viridis'];
 const spans = [0.15, 0.30, 0.60];
+const referencePoint = [[0, 0.33], [0.33, 0.66], [0.66, 1]];
+// data(3) cent(3) color(4) span(3) ref(3) => 324
 
 const Data = new function () {
     this.dataset = {};
