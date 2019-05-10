@@ -14,32 +14,27 @@ const Constant = {
         'single_greens': d3.interpolateGreens,
         'heat': d3.interpolateYlOrRd,
     },
+    dataNames: ["lesmis", "football", "jazz"],
+    centralityNames: ["page", "random"],
+    colorMapNames: ['single_blue', 'rainbow', 'divergent_red_blue', 'viridis'],
+    spans: [0.20, 0.60],
 };
 
-const dataNames = ["lesmis", "football", "jazz"];
-// const centralityNames = ["deg_log", "btw", "random"];
-const centralityNames = ["btw", "random"];
-const colorMapNames = ['single_blue', 'rainbow', 'divergent_red_blue', 'viridis'];
-const spans = [0.15, 0.30, 0.60];
-const referencePoint = [[0, 0.333], [0.333, 0.666], [0.666, 1]];
-// data(3) cent(3) color(4) span(3) ref(3) => 324
-// data(2) cent(2) color(4) span(3) 
+// TODO: remove refpoint and choose random node in 3 nodes
+// data(3) cent(2) color(4) span(2) => 48
 
 const Data = new function () {
     this.dataset = {};
-    const allDataNames = ['dolphins', 'football', 'karate', 'lesmis', 'netscience', 'jazz'];
     const that = this;
-
+    const allDataNames = ['dolphins', 'football', 'karate', 'lesmis', 'netscience', 'jazz'];
     this.road = async () => {
         for (let i = 0; i < allDataNames.length; i++) {
             that.dataset[allDataNames[i]] = await $.getJSON('./data/' + allDataNames[i] + '.json');
         }
     };
-
     this.getData = (dataName) => {
         return that.dataset[dataName];
     };
-
     return this;
 };
 Data.road();

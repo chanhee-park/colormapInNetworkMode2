@@ -53,6 +53,12 @@ const Util = new function () {
         return true;
     };
 
+    this.sortObjsBy = function (objs, key) {
+        return _.sortBy(objs, [function (o) {
+            return o[key];
+        }]);
+    }
+
     this.downloadJson = function (obj) {
         let strObj = JSON.stringify(obj);
         let blob = new Blob([strObj], { type: "text/plain;charset=utf-8" });

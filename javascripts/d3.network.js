@@ -1,4 +1,4 @@
-function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testIdx) {
+function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     const startTime = Util.getTime();
     const graph = Data.getData(dataName);
     const colorMap = Constant.colorMaps[colorMapName];
@@ -6,11 +6,11 @@ function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testId
     let rotate = Math.random() * 360;
     let scale = 1;
     let moveX = (dataName === 'jazz') ? -25 : 0;
-    let moveY = (dataName === 'jazz') ? -50 : 0;
+    let moveY = (dataName === 'jazz') ? -70 : 0;
 
     if (refCentrality === 'random') setRandCentrality();
 
-    console.log(dataName, refCentrality, colorMapName, refPoint, span);
+    console.log(dataName, refCentrality, colorMapName, span);
     $('.task-desc').text((testIdx+1) + "/324");
     $('.result-desc').text("");
 
@@ -18,10 +18,10 @@ function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testId
     const svgHTML = document.getElementById('network');
     const svg = d3.select("svg#network"),
         legendSvg = d3.select("svg#legend"),
-        svgWidth = svgHTML.width.baseVal.value,
+        svgWidth = svgHTML.height.baseVal.value,
         svgHeight = svgHTML.height.baseVal.value,
-        width = svgHeight * 0.9;
-        height = svgHeight * 0.9;
+        width = svgHeight * ((dataName === 'jazz') ? 0.95 : 0.85);
+        height = svgHeight * ((dataName === 'jazz') ? 0.95 : 0.85);
 
     svg.selectAll("*").remove();
     legendSvg.selectAll("*").remove();
@@ -31,7 +31,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testId
         linkColor = '#000',
         linkOpacity = 0.15,
         legendX = 25,
-        legendY = 50,
+        legendY = 30,
         legendSize = 27;
 
     let maxAxisVal = undefined,
@@ -100,24 +100,13 @@ function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testId
             const relative = i / 255;
             const virtualCentrality = Util.getAbsoluteVal(relative, minCentralityVal, maxCentralityVal);
             const color = getHexColor(virtualCentrality);
-            legendSvg.append('rect')
-                .attrs({
-                    x: legendX + i * w_ratio,
-                    y: legendY,
-                    width: 5,
-                    height: legendSize,
-                    fill: color,
-                });
-            if (i === 0 || i === 127 || i === 255) {
-                legendSvg.append('text')
-                    .text(virtualCentrality.toFixed(2))
-                    .attrs({
-                        x: legendX + i * w_ratio,
-                        y: legendY + legendSize + 15,
-                        'text-anchor': 'middle',
-                        'alignment-baseline': 'central'
-                    })
-            }
+            legendSvg.append('rect').attrs({
+                x: legendX + i * w_ratio,
+                y: legendY,
+                width: 5,
+                height: legendSize,
+                fill: color,
+            });
         }
     }
 
@@ -150,27 +139,52 @@ function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testId
             .classed('node', true)
             .classed(type, true)
             .on('click', function () {
+                console.log(node);
                 if (type === 'source') {
                     checkAnswerResult(node);
                 }
             });
     }
 
-    function drawTargets() {
-        const targetIds = getTargetSet(graph.nodes, refCentrality, span, refPoint);
+    function drawRectNode(node, type) {
+        const coord = getCoord({ x: node.x, y: node.y });
+        let color = getHexColor(node[refCentrality]);
 
-        const targetNodes = sortBy([
+        svg.append('rect')
+        .attrs({
+            x: coord.x - nodeRadius - 1,
+            y: coord.y - nodeRadius - 1,
+            width: nodeRadius * 2 + 2,
+            height: nodeRadius * 2 + 2,
+            fill: color,
+            stroke: '#000',
+            'stroke-width': '3px'
+        })
+        .classed('node', true)
+        .classed(type, true)
+        .on('click', function () {
+            console.log(node);
+            if (type === 'source') {
+                checkAnswerResult(node);
+            }
+        });
+    }
+
+    function drawTargets() {
+        const targetIds = getTargetSet(graph.nodes, refCentrality, span);
+        const targetNodes = [
             graph.nodes[targetIds[0]],
             graph.nodes[targetIds[1]],
             graph.nodes[targetIds[2]]
-        ], refCentrality);
+        ]
 
+        Util.shuffle(targetNodes);
         const sourceMin = targetNodes[0];
-        const sourceMax = targetNodes[2];
-        const target = targetNodes[1];
+        const sourceMax = targetNodes[1];
+        const target = targetNodes[2];
 
-        const minDiff = target[refCentrality] - sourceMin[refCentrality];
-        const maxDiff = sourceMax[refCentrality] - target[refCentrality];
+        const minDiff = Math.abs(target[refCentrality] - sourceMin[refCentrality]);
+        const maxDiff = Math.abs(target[refCentrality] - sourceMax[refCentrality]);
         correctNode = minDiff < maxDiff ? sourceMin : sourceMax;
 
         $('.task-nodes-desc').html(
@@ -178,9 +192,9 @@ function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testId
             + sourceMin[refCentrality] + '<br>' 
             + sourceMax[refCentrality] + '<br>'
             + target[refCentrality]);
-            
-        drawNode(sourceMin, 'source');
-        drawNode(sourceMax, 'source');
+        
+        drawRectNode(sourceMin, 'source');
+        drawRectNode(sourceMax, 'source');
         drawNode(target, 'target');
     }
 
@@ -203,14 +217,15 @@ function drawGraph(dataName, refCentrality, colorMapName, span, refPoint, testId
                     stroke: linkColor,
                     opacity: (dataName === 'jazz') ? linkOpacity / 3 : linkOpacity
                 })
+                .classed('edge', true);
         });
     }
 
     function transformDiagram() {
-        d3.selectAll('circle')
+        d3.selectAll('.node')
             .attr('transform', `rotate(${rotate}, ${svgWidth / 2}, ${svgHeight / 2}) scale(${scale}, ${scale}) translate(${moveX}, ${moveY})`);
 
-        d3.selectAll('line')
+        d3.selectAll('.edge')
             .attr('transform', `rotate(${rotate}, ${svgWidth / 2}, ${svgHeight / 2}) scale(${scale}, ${scale}) translate(${moveX}, ${moveY})`);
     }
 
