@@ -4,7 +4,7 @@ const Util = new function () {
      * @param dec
      * @returns {string}
      */
-    this.dec2Hex256 = function (dec) {
+    this.dec2Hex256 = (dec) => {
         return (dec <= 16 ? '0' : '' ) + Math.floor(dec).toString(16);
     };
 
@@ -14,7 +14,7 @@ const Util = new function () {
      * @param min
      * @param max
      */
-    this.getRelativeVal = function (val, min, max) {
+    this.getRelativeVal = (val, min, max) => {
         return (val - min) / (max - min);
     };
 
@@ -25,20 +25,20 @@ const Util = new function () {
      * @param max
      * @returns {*}
      */
-    this.getAbsoluteVal = function (ratio, min, max) {
+    this.getAbsoluteVal = (ratio, min, max) => {
         return (max - min) * ratio + min;
     };
 
-    this.getTime = function () {
+    this.getTime = () => {
         return new Date().getTime();
     };
 
-    this.getTimeDiffFrom = function (fromTime) {
+    this.getTimeDiffFrom = (fromTime) => {
         const toTime = new Date().getTime();
         return (toTime - fromTime) / 1000; // milli second
     };
 
-    this.equalElemInArray = function (_arr1, _arr2) {
+    this.equalElemInArray = (_arr1, _arr2) => {
         if (!Array.isArray(_arr1) || !Array.isArray(_arr2) || _arr1.length !== _arr2.length)
             return false;
 
@@ -53,13 +53,13 @@ const Util = new function () {
         return true;
     };
 
-    this.sortObjsBy = function (objs, key) {
-        return _.sortBy(objs, [function (o) {
+    this.sortObjsBy = (objs, key) => {
+        return _.sortBy(objs, [(o) => {
             return o[key];
         }]);
     }
 
-    this.downloadJson = function (obj) {
+    this.downloadJson = (obj) => {
         let strObj = JSON.stringify(obj);
         let blob = new Blob([strObj], { type: "text/plain;charset=utf-8" });
         // saveAs(blob, filename+".json");
@@ -75,6 +75,15 @@ const Util = new function () {
             arr[toIdx] = temp
         }
         return arr;
+    }
+
+    this.getRandomIntWithout = (without, from, to) => {
+        const list = [];
+        for(let idx = from; idx < to; idx++) {
+            if(_.indexOf(without, idx) === -1) list.push(idx);
+        }
+        const randomIdx = Math.floor(Math.random() * list.length)
+        return list[randomIdx];
     }
 
     return this;

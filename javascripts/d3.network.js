@@ -11,7 +11,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     if (refCentrality === 'random') setRandCentrality();
 
     console.log(dataName, refCentrality, colorMapName, span);
-    $('.task-desc').text((testIdx+1) + "/324");
+    $('.task-desc').text((testIdx+1) + "/48");
     $('.result-desc').text("");
 
     // Set Render Size

@@ -18,10 +18,9 @@ const Constant = {
     centralityNames: ["page", "random"],
     colorMapNames: ['single_blue', 'rainbow', 'divergent_red_blue', 'viridis'],
     spans: [0.20, 0.60],
+    // data(3) cent(2) color(4) span(2) => 48
 };
 
-// TODO: remove refpoint and choose random node in 3 nodes
-// data(3) cent(2) color(4) span(2) => 48
 
 const Data = new function () {
     this.dataset = {};

@@ -28,7 +28,7 @@ function getTargetSet(nodes, centrality, spanRatio) {
             const sourceMin = Math.min(nodes[i][centrality], nodes[j][centrality]);
             const sourceMax = Math.max(nodes[i][centrality], nodes[j][centrality]);
             const sourceDistance = sourceMax - sourceMin;
-            const k = getRandomIntWithout([i, j], 0, len);
+            const k = Util.getRandomIntWithout([i, j], 0, len);
             const info = {
                 nodes : [i, j, k],
                 error: Math.abs(sourceDistance - spanDistance)
@@ -77,11 +77,8 @@ function makeQuestionList() {
     return Util.shuffle(questions);
 }
 
-function getRandomIntWithout(without, from, to) {
-    const list = [];
-    for(let idx = from; idx < to; idx++) {
-        if(_.indexOf(without, idx) === -1) list.push(idx);
-    }
-    const randomIdx = Math.floor(Math.random() * list.length)
-    return list[randomIdx];
-}
+// TODO: 실험 소개 페이지 만들기
+// TODO: 페이지 접속시, 로그인 페이지 팝업
+// TODO: 색맹 이미지 변경
+// TODO: 튜토리얼은 안쓰인 데이터와 컬러맵으로
+// TODO: 데이터 저장 (항목 많이 ~~~ )
