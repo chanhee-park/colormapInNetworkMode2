@@ -1,254 +1,237 @@
 * {
-    box-sizing: border-box;
-    font-family: 'Noto Sans KR', sans-serif !important;
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif !important;
 }
 
 body {
-    width: 100%;
-    min-width: 980px;
-    max-width: 1920px;
-    min-height: 720px;
-    position: relative;
-    margin: 0;
-    padding: 10px 15px;
+  width: 100%;
+  min-width: 980px;
+  max-width: 1920px;
+  min-height: 720px;
+  position: relative;
+  margin: 0;
+  padding: 10px 15px;
 }
 
 a {
-    text-decoration: none
+  text-decoration: none
 }
 
 #app {
-    width: 100%;
+  width: 100%;
 }
 
 .login-zone {
-    width: 100%;
-    height: 50px;
-    padding: 10px 50px;
-    line-height: 30px;
-    display: flex;
-    font-size: 12px;
+  width: 350px;
+  padding: 10px 50px;
+  line-height: 30px;
+  font-size: 12px;
+  margin: 20% auto;
 }
 
 .login {
-    box-sizing: border-box;
-    display: inline-block;
-    height: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 300px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 24px;
+  margin: 5px auto;
+  text-align: center;
 }
 
-.login.info {
-    flex: 8;
-}
-
-.login#input-name {
-    flex: 1;
-}
-
-.login#login-button {
-    text-align: center;
-    cursor: pointer;
-    flex: 1;
-    background: #fa9;
+.login.login-button {
+  text-align: center;
+  cursor: pointer;
+  flex: 5;
+  background: #3D85C5;
+  color: #FFF;
+  min-width: 100px;
 }
 
 .test-zone {
-    width: 100%;
-    height: 100%;
-    left: 0;
-    padding: 0 48px 48px 48px;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  padding: 0 48px 48px 48px;
 }
 
 .title {
-    font-size: 24px;
-    line-height: 36px;
-    height: 36px;
+  font-size: 24px;
+  line-height: 36px;
+  height: 36px;
 }
 
 .content {
-    padding: 12px;
+  padding: 48px;
 }
 
 .content .sub-title {
-    font-size: 18px;
-    line-height: 24px;
-    height: 24px;
+  font-size: 24px;
+  line-height: 36px;
+  height: 36px;
 }
 
 .content .description {
-    font-size: 16px;
-    line-height: 24px;
-    color: #555;
-    padding: 4px 0;
-    min-height: 32px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #555;
+  padding: 4px 0;
+  min-height: 32px;
 }
 
 .content .description.right {
-    float: right;
-    flex: 1;
-    padding: 0 50px;
+  float: right;
+  flex: 1;
+  padding: 0 50px;
 }
 
 .button {
-    width: 100px;
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    color: black;
-    background: #fa9;
-    user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    position: absolute;
-    bottom: 20px !important;
-    cursor: pointer;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    transition: background-color .3s;
-}
-
-.back-page-button {
-    left: 30px;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: black;
+  background: #3D85C5;
+  color: #FFF;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  transition: background-color .3s;
 }
 
 .next-page-button {
-    right: 30px;
-}
-
-.start-button {
-    width: 100px;
-    height: 50px;
-    line-height: 50px;
-    top: 300px;
-    left: 350px;
-}
-
-.task-complete-button {
-    left: calc(50% - 100px);
-    width: 100px;
+  width: 300px;
+  height: 50px;
+  line-height: 50px;
+  margin: 50px calc(50% - 150px);
 }
 
 .button:hover {
-    background: #f98;
+  background: #5DA5F5;
 }
 
 .button:active {
-    background: #fba;
+  background: #1D45A5;
 }
 
 .image-wrapper {
-    margin: 10px 0;
-    display: inline;
+  margin: 10px 0;
+  display: inline;
 }
 
-.image-wrapper > img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.image-wrapper>img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .render-area {
-    display: inline-block;
-    width: 93vh;
-    height: 88vh;
-    max-width: 100vw - 400px;
-    margin: 0 0 0 calc(50vw - 50vh) !important;
+  display: inline-block;
+  width: 93vh;
+  height: 88vh;
+  max-width: 100vw - 400px;
+  margin: 0 0 0 calc(50vw - 50vh) !important;
 }
 
-.render-area > svg#network {
-    width: 100%;
-    height: 100%;
+.render-area>svg#network {
+  width: 100%;
+  height: 100%;
 }
 
 svg#legend {
-    width: 100%;
+  width: 100%;
 }
 
 .desc-area {
-    display: inline-block;
-    vertical-align : top;
-    font-size: 16px;
-    color : #333;
-    font-weight: 100;
-    padding : 50px 20px;
-    font-size : 12px;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+  color: #333;
+  font-weight: 100;
+  padding: 50px 20px;
+  font-size: 12px;
 }
 
-
-
-.task-desc , .result-desc, .task-nodes-desc {
-    padding : 5px 5px 5px 25px;
+.task-desc, .result-desc, .task-nodes-desc {
+  padding: 5px 5px 5px 25px;
 }
+
+.result-desc {
+  font-size: 24px;
+  font-weight: 700;
+}
+
 .wrong {
-    color: red;
+  color: red;
 }
+
 .correct {
-    color: blue;
+  color: blue;
 }
 
 circle {
-    border: 5px solid black;
+  border: 5px solid black;
 }
 
 circle.source {
-    stroke: 3px solid blue;
+  stroke: 3px solid blue;
 }
 
 circle.source:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 rect.source:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .flex-zone {
-    display: flex;
+  width: 100%;
+  display: flex;
 }
 
 .empty-flex-1 {
-    flex: 1;
+  flex: 1;
 }
 
 .flex-4 {
-    flex: 4;
+  flex: 4;
 }
 
 .flex-2 {
-    flex: 2;
+  flex: 2;
 }
 
 .description b {
-    color: #700
+  color: #700
 }
 
 text {
-    user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -ms-user-select: none
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none
 }
 
 .flex-wrapper {
-    display: flex;
-}
-
-.button.fix {
-    position: fixed;
-    right: 50px;
-    bottom: 50px;
+  display: flex;
 }
 
 .thankyou {
-    font-size: 42px;
-    text-align: center;
-    margin-top: 15%;
+  font-size: 42px;
+  text-align: center;
+  margin-top: 15%;
 }
