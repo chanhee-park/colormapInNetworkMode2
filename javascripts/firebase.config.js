@@ -25,5 +25,3 @@ firebase
     const errorCode = error.code;
     const errorMessage = error.message;
   });
-
-console.log('fb config on');

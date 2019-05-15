@@ -64,7 +64,6 @@ const loginModule = new (function() {
       // User is signed out.
     }
   });
-  console.log('fb login module on');
   return this;
 })();
 
