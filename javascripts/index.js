@@ -1,4 +1,4 @@
-const questions = makeQuestionList();
+let questions = [];
 const t_questions = [
   ['karate', 'btw', 'brewer_yellow-green-blue', 0.2],
   ['karate', 'deg_log', 'magma', 0.6],
@@ -20,6 +20,7 @@ function Start() {
 }
 
 function testStart() {
+  questions = makeQuestionList();
   setTimeout(function() {
     userTest(-3);
   }, 1000);
