@@ -53,12 +53,15 @@ function getTargetSet(nodes, centrality, spanRatio) {
       const sourceMin = Math.min(nodes[i][centrality], nodes[j][centrality]);
       const sourceMax = Math.max(nodes[i][centrality], nodes[j][centrality]);
       const sourceDistance = sourceMax - sourceMin;
-      const k = Util.getRandomIntWithout([i, j], 0, len);
-      const info = {
-        nodes: [i, j, k],
-        error: Math.abs(sourceDistance - spanDistance)
-      };
-      ret.push(info);
+      for (let k = i + 2; k < len; k++) {
+        const targetVal = nodes[k][centrality];
+        if (sourceMin < targetVal && targetVal < sourceMax) {
+          ret.push({
+            nodes: [i, j, k],
+            error: Math.abs(sourceDistance - spanDistance) + Math.random * 0.001
+          });
+        }
+      }
     }
   }
   const sorted = _.sortBy(ret, 'error');
