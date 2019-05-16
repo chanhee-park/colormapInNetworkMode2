@@ -58,13 +58,15 @@ function getTargetSet(nodes, centrality, spanRatio) {
         if (sourceMin < targetVal && targetVal < sourceMax) {
           ret.push({
             nodes: [i, j, k],
-            error: Math.abs(sourceDistance - spanDistance) + Math.random * 0.001
+            error:
+              Math.abs(sourceDistance - spanDistance) + Math.random() / 10000
           });
         }
       }
     }
   }
   const sorted = _.sortBy(ret, 'error');
+  console.log(sorted);
   return sorted[0].nodes;
 }
 
