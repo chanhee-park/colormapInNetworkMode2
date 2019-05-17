@@ -13,11 +13,11 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
   console.log(dataName, refCentrality, colorMapName, span);
   if (testIdx < 0) {
     $('.task-desc').text('Tutorial : ' + (testIdx + 4) + '/3');
-    $('.result-desc').text('');
   } else {
     $('.task-desc').text(testIdx + 1 + '/48');
-    $('.result-desc').text('');
   }
+  $('.result-desc').text('');
+  $('.task-nodes-desc').text(span);
 
   // Set Render Size
   const svgHTML = document.getElementById('network');

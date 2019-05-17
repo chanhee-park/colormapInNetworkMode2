@@ -17,7 +17,7 @@ const Constant = {
   dataNames: ['lesmis', 'football', 'jazz'],
   centralityNames: ['page', 'random'],
   colorMapNames: ['single_blue', 'rainbow', 'divergent_red_blue', 'viridis'],
-  spans: [0.2, 0.6]
+  spans: [0.15, 0.4]
   // data(3) cent(2) color(4) span(2) => 48
 };
 
@@ -54,11 +54,13 @@ const Page = [
     Todays user study is about <b>“Colormaps in Network Visualization/Graph”</b> (Node link diagram). This is a research study.
     We want to understand how to best show network data with respect to color scales/schemes used for representing the nodes.
     We will present some visualizations (node link diagram) of different data sets with links between those nodes.
+    This experiment involves 48 tasks. The estimated time for this experiment is about 15 minutes.
   </div>
   <div class="description">
     오늘의 사용자 연구는 <b>"네트워크 시각화/그래프에서 컬러맵별 사용성 평가"</b>에 관한 것입니다. 
     우리는 노드를 나타내는 데 사용되는 색상 스케일 / 체계와 관련하여 네트워크 데이터를 가장 잘 표시하는 방법을 이해하고자합니다.
     우리는 노드들 사이의 링크를 가진 다른 데이터 세트의 시각화 (노드 링크 다이어그램)를 제시 할 것입니다.
+    이 실험은 48개의 문항으로 이뤄져있으며, 이를 수행하기 위해 15분 내외의 시간이 필요합니다.
   </div>
   <br>
   <div class="flex-zone">
@@ -189,7 +191,7 @@ const Page = [
     <br>
     <br>
     </div>
-    <div class="button next-page-button" id="startTutorial">Got it! Take me to the Study</div>
+    <div class="button next-page-button" id="startTutorial">Complete</div>
   `,
   `
 <div id="app">
