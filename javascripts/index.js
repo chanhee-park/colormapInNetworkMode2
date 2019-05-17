@@ -50,8 +50,8 @@ function getTargetSet(nodes, centrality, spanRatio) {
   const len = nodes.length;
   for (let i = 0; i < len - 2; i++) {
     for (let j = i + 1; j < len - 1; j++) {
-      const sourceMin = Math.min(nodes[i][centrality], nodes[j][centrality]);
       const sourceMax = Math.max(nodes[i][centrality], nodes[j][centrality]);
+      const sourceMin = Math.min(nodes[i][centrality], nodes[j][centrality]);
       const sourceDistance = sourceMax - sourceMin;
       for (let k = i + 2; k < len; k++) {
         const targetVal = nodes[k][centrality];
@@ -59,7 +59,9 @@ function getTargetSet(nodes, centrality, spanRatio) {
           ret.push({
             nodes: [i, j, k],
             error:
-              Math.abs(sourceDistance - spanDistance) + Math.random() / 10000
+              Math.abs(sourceDistance - spanDistance) +
+              (Math.random() * Math.abs(sourceDistance - spanDistance)) /
+                100000000
           });
         }
       }

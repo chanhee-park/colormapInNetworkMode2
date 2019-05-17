@@ -184,18 +184,16 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
 
   function drawTargets() {
     const targetIds = getTargetSet(graph.nodes, refCentrality, span);
-    const targetNodes = _.sortBy(
-      [
-        graph.nodes[targetIds[0]],
-        graph.nodes[targetIds[1]],
-        graph.nodes[targetIds[2]]
-      ],
-      refCentrality
-    );
+    const targetNodes = [
+      graph.nodes[targetIds[0]],
+      graph.nodes[targetIds[1]],
+      graph.nodes[targetIds[2]]
+    ];
+    showTargets(targetNodes);
 
     const sourceMin = targetNodes[0];
-    const sourceMax = targetNodes[2];
-    const target = targetNodes[1];
+    const sourceMax = targetNodes[1];
+    const target = targetNodes[2];
 
     const minDiff = Math.abs(target[refCentrality] - sourceMin[refCentrality]);
     const maxDiff = Math.abs(target[refCentrality] - sourceMax[refCentrality]);
@@ -204,6 +202,28 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     drawRectNode(sourceMin, 'source');
     drawRectNode(sourceMax, 'source');
     drawNode(target, 'target');
+  }
+
+  function showTargets(nodes) {
+    for (const node of nodes) {
+      const relative =
+        (node[refCentrality] - minCentralityVal) / maxCentralityVal;
+      const virtualCentrality = Util.getAbsoluteVal(
+        relative,
+        minCentralityVal,
+        maxCentralityVal
+      );
+      let w_ratio = svgHTML.width.baseVal.value / 300;
+      const color = getHexColor(virtualCentrality);
+      legendSvg.append('rect').attrs({
+        x: legendX + relative * 255 * w_ratio,
+        y: legendY + legendSize + 5,
+        width: 25,
+        height: 25,
+        fill: color,
+        stroke: '#000'
+      });
+    }
   }
 
   /**
