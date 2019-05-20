@@ -134,4 +134,4 @@ function blindTest() {
   console.log(TEST_DATA);
 }
 
-// testStart(-3);
+testStart(-3);

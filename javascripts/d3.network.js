@@ -189,11 +189,13 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
       graph.nodes[targetIds[1]],
       graph.nodes[targetIds[2]]
     ];
-    showTargets(targetNodes);
 
     const sourceMin = targetNodes[0];
     const sourceMax = targetNodes[1];
     const target = targetNodes[2];
+
+    showCompares([sourceMin, sourceMax]);
+    showTarget(target);
 
     const minDiff = Math.abs(target[refCentrality] - sourceMin[refCentrality]);
     const maxDiff = Math.abs(target[refCentrality] - sourceMax[refCentrality]);
@@ -227,7 +229,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     );
   }
 
-  function showTargets(nodes) {
+  function showCompares(nodes) {
     for (const node of nodes) {
       const relative = Util.getRelativeVal(
         node[refCentrality],
@@ -241,6 +243,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
       );
       let w_ratio = svgHTML.width.baseVal.value / 300;
       const color = getHexColor(virtualCentrality);
+
       legendSvg.append('rect').attrs({
         x: legendX + relative * 255 * w_ratio,
         y: legendY + legendSize + 5,
@@ -250,6 +253,29 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
         stroke: '#000'
       });
     }
+  }
+
+  function showTarget(node) {
+    const relative = Util.getRelativeVal(
+      node[refCentrality],
+      minCentralityVal,
+      maxCentralityVal
+    );
+    const virtualCentrality = Util.getAbsoluteVal(
+      relative,
+      minCentralityVal,
+      maxCentralityVal
+    );
+    let w_ratio = svgHTML.width.baseVal.value / 300;
+    const color = getHexColor(virtualCentrality);
+
+    legendSvg.append('circle').attrs({
+      cx: legendX + relative * 255 * w_ratio + 12.5,
+      cy: legendY + legendSize + 5 + 12.5,
+      r: 12.5,
+      fill: color,
+      stroke: '#000'
+    });
   }
 
   /**
