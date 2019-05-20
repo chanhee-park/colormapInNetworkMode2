@@ -68,7 +68,6 @@ function getTargetSet(nodes, centrality, spanRatio) {
     }
   }
   const sorted = _.sortBy(ret, 'error');
-  console.log(sorted);
   return sorted[0].nodes;
 }
 
@@ -134,3 +133,5 @@ function blindTest() {
   testStart(-3);
   console.log(TEST_DATA);
 }
+
+// testStart(-3);

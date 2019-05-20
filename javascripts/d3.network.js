@@ -11,13 +11,13 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
   if (refCentrality === 'random') setRandCentrality();
 
   console.log(dataName, refCentrality, colorMapName, span);
+
   if (testIdx < 0) {
     $('.task-desc').text('Tutorial : ' + (testIdx + 4) + '/3');
   } else {
     $('.task-desc').text(testIdx + 1 + '/48');
   }
   $('.result-desc').text('');
-  $('.task-nodes-desc').text(span);
 
   // Set Render Size
   const svgHTML = document.getElementById('network');
@@ -25,8 +25,8 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     legendSvg = d3.select('svg#legend'),
     svgWidth = svgHTML.height.baseVal.value,
     svgHeight = svgHTML.height.baseVal.value,
-    width = svgHeight * (dataName === 'jazz' ? 0.95 : 0.85);
-  height = svgHeight * (dataName === 'jazz' ? 0.95 : 0.85);
+    width = svgHeight * (dataName === 'jazz' ? 0.85 : 0.75);
+  height = svgHeight * (dataName === 'jazz' ? 0.85 : 0.75);
 
   svg.selectAll('*').remove();
   legendSvg.selectAll('*').remove();
@@ -202,12 +202,38 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     drawRectNode(sourceMin, 'source');
     drawRectNode(sourceMax, 'source');
     drawNode(target, 'target');
+
+    $('.task-nodes-desc').html(
+      span +
+        '<br>' +
+        Util.getRelativeVal(
+          sourceMin[refCentrality],
+          minCentralityVal,
+          maxCentralityVal
+        ) +
+        '<br>' +
+        Util.getRelativeVal(
+          target[refCentrality],
+          minCentralityVal,
+          maxCentralityVal
+        ) +
+        '<br>' +
+        Util.getRelativeVal(
+          sourceMax[refCentrality],
+          minCentralityVal,
+          maxCentralityVal
+        ) +
+        '<br>'
+    );
   }
 
   function showTargets(nodes) {
     for (const node of nodes) {
-      const relative =
-        (node[refCentrality] - minCentralityVal) / maxCentralityVal;
+      const relative = Util.getRelativeVal(
+        node[refCentrality],
+        minCentralityVal,
+        maxCentralityVal
+      );
       const virtualCentrality = Util.getAbsoluteVal(
         relative,
         minCentralityVal,
@@ -282,7 +308,6 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
    * @param centrality
    * @returns {string} : rgb({r}, {g}, {b})
    */
-
   function getHexColor(centrality) {
     const relativeVal = Util.getRelativeVal(
       centrality,
