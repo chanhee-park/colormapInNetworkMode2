@@ -184,11 +184,11 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
 
   function drawTargets() {
     const targetIds = getTargetSet(graph.nodes, refCentrality, span);
-    const targetNodes = [
+    const targetNodes = Util.shuffle([
       graph.nodes[targetIds[0]],
       graph.nodes[targetIds[1]],
       graph.nodes[targetIds[2]]
-    ];
+    ]);
 
     const sourceMin = targetNodes[0];
     const sourceMax = targetNodes[1];
@@ -209,19 +209,19 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
       span +
         '<br>' +
         Util.getRelativeVal(
-          sourceMin[refCentrality],
+          graph.nodes[targetIds[0]][refCentrality],
           minCentralityVal,
           maxCentralityVal
         ) +
         '<br>' +
         Util.getRelativeVal(
-          target[refCentrality],
+          graph.nodes[targetIds[1]][refCentrality],
           minCentralityVal,
           maxCentralityVal
         ) +
         '<br>' +
         Util.getRelativeVal(
-          sourceMax[refCentrality],
+          graph.nodes[targetIds[2]][refCentrality],
           minCentralityVal,
           maxCentralityVal
         ) +

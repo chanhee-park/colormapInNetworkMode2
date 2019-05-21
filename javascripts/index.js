@@ -22,7 +22,7 @@ function Start() {
 function testStart() {
   questions = makeQuestionList();
   setTimeout(function() {
-    userTest(-3);
+    userTest(0);
   }, 1000);
 }
 
@@ -58,16 +58,17 @@ function getTargetSet(nodes, centrality, spanRatio) {
         if (sourceMin < targetVal && targetVal < sourceMax) {
           ret.push({
             nodes: [i, j, k],
-            error:
-              Math.abs(sourceDistance - spanDistance) +
-              (Math.random() * Math.abs(sourceDistance - spanDistance)) /
-                100000000
+            error: Math.abs(sourceDistance - spanDistance),
+            distance:
+              Math.max(sourceMax - targetVal, targetVal - sourceMin) *
+              (1 + Math.random() / (30 / spanRatio))
           });
         }
       }
     }
   }
-  const sorted = _.sortBy(ret, 'error');
+  const sorted = _.sortBy(ret, ['error', 'distance']);
+  console.log(sorted);
   return sorted[0].nodes;
 }
 
@@ -91,7 +92,7 @@ function getMaxValue(objs, key) {
 
 function getSpanDistance(min, max, span) {
   const interval = max - min;
-  return span * interval + min;
+  return span * interval;
 }
 function getSpanRatio(min, max, distance) {
   return (distance - min) / (max - min);
@@ -133,5 +134,3 @@ function blindTest() {
   testStart(-3);
   console.log(TEST_DATA);
 }
-
-testStart(-3);
