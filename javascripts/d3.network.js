@@ -3,6 +3,10 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
   const graph = Data.getData(dataName);
   const colorMap = Constant.colorMaps[colorMapName];
 
+  // setTimeout(function() {
+  //   userTest(testIdx + 1);
+  // }, 1000);
+
   let rotate = Math.random() * 360;
   let scale = 1;
   let moveX = dataName === 'jazz' ? -25 : 0;
@@ -190,20 +194,20 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
       graph.nodes[targetIds[2]]
     ]);
 
-    const sourceMin = targetNodes[0];
-    const sourceMax = targetNodes[1];
-    const target = targetNodes[2];
+    const C1 = targetNodes[0];
+    const C2 = targetNodes[1];
+    const T = targetNodes[2];
 
-    showCompares([sourceMin, sourceMax]);
-    showTarget(target);
+    showCompares([C1, C2]);
+    showTarget(T);
 
-    const minDiff = Math.abs(target[refCentrality] - sourceMin[refCentrality]);
-    const maxDiff = Math.abs(target[refCentrality] - sourceMax[refCentrality]);
-    correctNode = minDiff < maxDiff ? sourceMin : sourceMax;
+    const diff1 = Math.abs(T[refCentrality] - C1[refCentrality]);
+    const diff2 = Math.abs(T[refCentrality] - C2[refCentrality]);
+    correctNode = diff1 < diff2 ? C1 : C2;
 
-    drawRectNode(sourceMin, 'source');
-    drawRectNode(sourceMax, 'source');
-    drawNode(target, 'target');
+    drawRectNode(C1, 'source');
+    drawRectNode(C2, 'source');
+    drawNode(T, 'target');
 
     $('.task-nodes-desc').html(
       span +

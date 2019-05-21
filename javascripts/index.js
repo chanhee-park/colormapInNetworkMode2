@@ -47,6 +47,7 @@ function getTargetSet(nodes, centrality, spanRatio) {
   const min = getMinValue(nodes, centrality);
   const max = getMaxValue(nodes, centrality);
   const spanDistance = getSpanDistance(min, max, spanRatio);
+  const ct_distance = spanRatio > 0.2 ? 1 : 10;
   const len = nodes.length;
   for (let i = 0; i < len - 2; i++) {
     for (let j = i + 1; j < len - 1; j++) {
@@ -61,14 +62,13 @@ function getTargetSet(nodes, centrality, spanRatio) {
             error: Math.abs(sourceDistance - spanDistance),
             distance:
               Math.max(sourceMax - targetVal, targetVal - sourceMin) *
-              (1 + Math.random() / (30 / spanRatio))
+              (1 + Math.random() / ct_distance)
           });
         }
       }
     }
   }
   const sorted = _.sortBy(ret, ['error', 'distance']);
-  console.log(sorted);
   return sorted[0].nodes;
 }
 
