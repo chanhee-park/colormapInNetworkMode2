@@ -22,7 +22,7 @@ function Start() {
 function testStart() {
   questions = makeQuestionList();
   setTimeout(function() {
-    userTest(0);
+    userTest(-3);
   }, 1000);
 }
 
@@ -131,6 +131,6 @@ function blindTest() {
   console.log('color blind', color_blind);
   $('html').scrollTop(0);
   $('body').html(Page[2]);
-  testStart(-3);
+  testStart();
   console.log(TEST_DATA);
 }

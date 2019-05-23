@@ -90,6 +90,7 @@ const Page = [
     <img id='ref node img' src="image/ref_nd.png" alt="node link diagram" height="15">
     <br> <b>2. Comparison nodes</b> : Comparison nodes will be highlighted by a black square around them. 
     <img id='comp node img' src="image/comp_nd.png" alt="node link diagram" height="15">
+    <img id='ref node img' src="image/comp_nd2.png" alt="node link diagram" height="15">
     <br> A colormap will be shown along with the node link diagram. 
   </div>
   <div class="description">
@@ -99,6 +100,7 @@ const Page = [
     <img id='ref node img' src="image/ref_nd.png" alt="node link diagram" height="15">
     <br> <b>2. 두개의 비교노드</b> : 검정색 테두리를 가진 사각형으로 표시됩니다.
     <img id='comp node img' src="image/comp_nd.png" alt="node link diagram" height="15">
+    <img id='ref node img' src="image/comp_nd2.png" alt="node link diagram" height="15">
     <br> 다이어그램과 함께 컬러맵도 표시됩니다.
   </div>
   <br> 

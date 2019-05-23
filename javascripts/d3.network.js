@@ -19,7 +19,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
   if (testIdx < 0) {
     $('.task-desc').text('Tutorial : ' + (testIdx + 4) + '/3');
   } else {
-    $('.task-desc').text(testIdx + 1 + '/48');
+    $('.task-desc').text('Task : ' + testIdx + 1 + '/48');
   }
   $('.result-desc').text('');
 

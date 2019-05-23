@@ -51,7 +51,7 @@ const loginModule = new (function() {
       const ugender = $('input#input-gender').val();
       console.log(uname, uage, ugender + ' is signed in.');
 
-      thatLoginModule.setUserInfo(uid, uname, uage, ugender);
+      thatLoginModule.setUserInfo(uid, uname, ugender, uage);
 
       if (uname === '_save_csv') {
         saveCSV();
