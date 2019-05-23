@@ -47,7 +47,7 @@ function getTargetSet(nodes, centrality, spanRatio) {
   const min = getMinValue(nodes, centrality);
   const max = getMaxValue(nodes, centrality);
   const spanDistance = getSpanDistance(min, max, spanRatio);
-  const ct_distance = spanRatio > 0.2 ? 1 : 10;
+  const ct_distance = spanRatio > 0.2 ? 0.5 : 5;
   const len = nodes.length;
   for (let i = 0; i < len - 2; i++) {
     for (let j = i + 1; j < len - 1; j++) {

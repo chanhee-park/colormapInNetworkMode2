@@ -17,9 +17,9 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
   console.log(dataName, refCentrality, colorMapName, span);
 
   if (testIdx < 0) {
-    $('.task-desc').text('Tutorial : ' + (testIdx + 4) + '/3');
+    $('.task-desc').html('<br>Tutorial : ' + (testIdx + 4) + '/3</br>');
   } else {
-    $('.task-desc').text('Task : ' + testIdx + 1 + '/48');
+    $('.task-desc').html('<br>Task : ' + (testIdx + 1) + '/48</br>');
   }
   $('.result-desc').text('');
 
@@ -198,8 +198,8 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     const C2 = targetNodes[1];
     const T = targetNodes[2];
 
-    showCompares([C1, C2]);
-    showTarget(T);
+    // showCompares([C1, C2]);
+    // showTarget(T);
 
     const diff1 = Math.abs(T[refCentrality] - C1[refCentrality]);
     const diff2 = Math.abs(T[refCentrality] - C2[refCentrality]);
@@ -208,29 +208,6 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     drawRectNode(C1, 'source');
     drawRectNode(C2, 'source');
     drawNode(T, 'target');
-
-    $('.task-nodes-desc').html(
-      span +
-        '<br>' +
-        Util.getRelativeVal(
-          graph.nodes[targetIds[0]][refCentrality],
-          minCentralityVal,
-          maxCentralityVal
-        ) +
-        '<br>' +
-        Util.getRelativeVal(
-          graph.nodes[targetIds[1]][refCentrality],
-          minCentralityVal,
-          maxCentralityVal
-        ) +
-        '<br>' +
-        Util.getRelativeVal(
-          graph.nodes[targetIds[2]][refCentrality],
-          minCentralityVal,
-          maxCentralityVal
-        ) +
-        '<br>'
-    );
   }
 
   function showCompares(nodes) {
