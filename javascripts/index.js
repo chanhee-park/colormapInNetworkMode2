@@ -13,33 +13,55 @@ function Start() {
   $('#startColorBlind').click(function() {
     $('html').scrollTop(0);
     $('body').html(Page[1]);
-    $('#startTutorial').click(function() {
+    $('#completeColorblindTest').click(function() {
       blindTest();
+      $('html').scrollTop(0);
+      $('body').html(Page[2]);
+      $('#startTutorial').click(function() {
+        $('body').html(Page[3]);
+        tutorialStart();
+      });
     });
   });
+}
+
+function tutorialStart() {
+  setTimeout(function() {
+    tutorialTest(0);
+  }, 1000);
 }
 
 function testStart() {
   questions = makeQuestionList();
   setTimeout(function() {
-    userTest(-3);
+    userTest(0);
   }, 1000);
 }
 
+function tutorialTest(testIdx) {
+  console.warn('Tutorial : ', testIdx);
+  if (testIdx >= t_questions.length) {
+    $('body').html(Page[4]);
+    $('#startTest').click(function() {
+      $('body').html(Page[5]);
+      testStart(0);
+    });
+    return;
+  }
+  const q = t_questions[testIdx];
+  drawGraph(q[0], q[1], q[2], q[3], testIdx, 'tutorial'); // data, cnet, color, span
+}
+
 function userTest(testIdx) {
+  console.warn('Actual : ', testIdx);
   if (testIdx >= questions.length) {
     // End of Test (48)
     writeData();
-    $('body').html(Page[3]);
+    $('body').html(Page[5]);
     return TEST_RESULT;
   }
-
-  // tutorial ? Tutorial (-3 ~ -1) : Actual Test (0 ~ 47)
-  let q = testIdx < 0 ? t_questions[-testIdx - 1] : questions[testIdx];
-  let setTime = testIdx < 1 ? 1500 : 100;
-  setTimeout(function() {
-    drawGraph(q[0], q[1], q[2], q[3], testIdx); // data, cnet, color, span
-  }, setTime);
+  let q = questions[testIdx];
+  drawGraph(q[0], q[1], q[2], q[3], testIdx, 'actual'); // data, cnet, color, span
 }
 
 function getTargetSet(nodes, centrality, spanRatio) {
@@ -131,6 +153,5 @@ function blindTest() {
   console.log('color blind', color_blind);
   $('html').scrollTop(0);
   $('body').html(Page[2]);
-  testStart();
   console.log(TEST_DATA);
 }

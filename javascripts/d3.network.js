@@ -1,23 +1,18 @@
-function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
+function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
   const startTime = Util.getTime();
   const graph = Data.getData(dataName);
   const colorMap = Constant.colorMaps[colorMapName];
-
-  // setTimeout(function() {
-  //   userTest(testIdx + 1);
-  // }, 1000);
 
   let rotate = Math.random() * 360;
   let scale = 1;
   let moveX = dataName === 'jazz' ? -25 : 0;
   let moveY = dataName === 'jazz' ? -70 : 0;
-
   if (refCentrality === 'random') setRandCentrality();
 
   console.log(dataName, refCentrality, colorMapName, span);
 
-  if (testIdx < 0) {
-    $('.task-desc').html('<br>Tutorial : ' + (testIdx + 4) + '/3</br>');
+  if (mode === 'tutorial') {
+    $('.task-desc').html('<br>Tutorial : ' + (testIdx + 1) + '/3</br>');
   } else {
     $('.task-desc').html('<br>Task : ' + (testIdx + 1) + '/48</br>');
   }
@@ -138,7 +133,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     const coord = getCoord({ x: node.x, y: node.y });
     let color = getHexColor(node[refCentrality]);
 
-    let addedRadius = type !== undefined ? 1.5 : 0;
+    let addedRadius = type !== undefined ? 4 : 0;
     let stroke = type === 'source' ? '#F00' : 'none';
     stroke = type === 'target' ? '#000' : stroke;
 
@@ -169,10 +164,10 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     svg
       .append('rect')
       .attrs({
-        x: coord.x - nodeRadius - 1,
-        y: coord.y - nodeRadius - 1,
-        width: nodeRadius * 2 + 2,
-        height: nodeRadius * 2 + 2,
+        x: coord.x - nodeRadius - 2,
+        y: coord.y - nodeRadius - 2,
+        width: nodeRadius * 2 + 4,
+        height: nodeRadius * 2 + 4,
         fill: color,
         stroke: '#000',
         'stroke-width': '3px'
@@ -344,7 +339,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
     const classToAdd = isCorrect ? 'correct' : 'wrong';
     const classToRemove = !isCorrect ? 'correct' : 'wrong';
 
-    if (testIdx < 0) {
+    if (mode === 'tutorial') {
       $('.result-desc')
         .text(elapsedTime + ', ' + classToAdd)
         .removeClass(classToRemove)
@@ -360,6 +355,11 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx) {
       isCorrect: isCorrect
     });
     console.log(TEST_DATA);
-    userTest(testIdx + 1);
+
+    mode === 'tutorial'
+      ? setTimeout(function() {
+          tutorialTest(testIdx + 1);
+        }, 1000)
+      : userTest(testIdx + 1);
   }
 }

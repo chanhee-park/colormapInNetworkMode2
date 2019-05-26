@@ -10,5 +10,6 @@ let TEST_DATA = {
 };
 
 function writeData() {
+  console.warn('Write Test Data :', TEST_DATA);
   database.ref('userTest2/' + TEST_DATA.u_id).set(TEST_DATA);
 }

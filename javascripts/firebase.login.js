@@ -13,7 +13,6 @@ const loginModule = new (function() {
       alert('Please Enter Correct Values');
       return;
     }
-    alert('Hello ' + uname);
 
     FirebaseAuth.signInAnonymously().catch(error => {
       const errorCode = error.code;

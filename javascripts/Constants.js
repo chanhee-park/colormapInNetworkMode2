@@ -96,7 +96,7 @@ const Page = [
   <div class="description">
     노드 링크 다이어그램이 아래와 같이 표시됩니다.
     <br> 다이어그램에는 강조된 3개의 노드가 있습니다.
-    <br> <b>1. 한개의 레퍼런스 노드</b> :  검정색 테두리를 가진 원으로 표시됩니다.
+    <br> <b>1. 한개의 기준 노드</b> :  검정색 테두리를 가진 원으로 표시됩니다.
     <img id='ref node img' src="image/ref_nd.png" alt="node link diagram" height="15">
     <br> <b>2. 두개의 비교노드</b> : 검정색 테두리를 가진 사각형으로 표시됩니다.
     <img id='comp node img' src="image/comp_nd.png" alt="node link diagram" height="15">
@@ -114,9 +114,10 @@ const Page = [
     Please perform that task as fast and accurate as possible by utilizing the graph and colormap given.
   </div>
   <div class="description">
-    주어진 색상 맵에 따라 참조 노드에 더 가깝다고 생각되는 두 개의 비교 노드 중 하나를 선택하십시오.
-    작업을 수행하려면 두 비교 노드 중 하나를 클릭해야합니다.
-    각 작업마다 해당 작업에 대한 반응 시간과 정확성 (true / false)이 기록됩니다.
+    실험을 수행하려면 두 비교 노드(사각형 노드) 중 하나를 클릭해야합니다. 
+    각 작업마다 해당 작업에 대한 반응 시간과 정확성이 기록됩니다.
+    두 비교 노드(사각형 노드) 중에 기준 노드(원형 노드)와 더 가까운 색을 가지는 노드를 골라주세요.
+    그래프 하단에 주어진 컬러 맵을 참고하여 노드 색상 사아의 유사도를 확인하세요.
     주어진 그래프와 컬러 맵을 이용하여 가능한 한 빠르고 정확하게 작업을 수행하십시오.  
   </div>
   <div class="button next-page-button" id="startColorBlind">Got it! Take me to the Study</div>
@@ -193,20 +194,47 @@ const Page = [
     <br>
     <br>
     </div>
-    <div class="button next-page-button" id="startTutorial">Complete</div>
+    <div class="button next-page-button" id="completeColorblindTest">Complete</div>
   `,
   `
-<div id="app">
-  <div class="render-area">
-    <svg id="network"></svg>
-    <svg id="legend"></svg>
+  <div class='thankyou'>
+    Prior to this actual test, there are three tutorial task.
+    <br><br>본 실험에 앞서 3번의 튜토리얼 문제가 있습니다. 
   </div>
-  <dlv class="desc-area">
-    <div class="task-desc"></div>
-    <div class="task-nodes-desc"></div>
-    <div class="result-desc"></div>
-  </dlv>
-</div>
+  <div class="button next-page-button" id="startTutorial">Start Tutorial</div>
+  `,
+  `
+  <div id="app">
+    <dlv class="desc-area">
+      <div class="task-desc"></div>
+      <div class="task-nodes-desc"></div>
+      <div class="result-desc"></div>
+    </dlv>
+    <div class="render-area">
+      <svg id="network"></svg>
+      <svg id="legend"></svg>
+    </div>
+  </div>
+  `,
+  `
+  <div class='thankyou'>
+    The actual test will begin. The test will take about 10 minutes.
+    <br><br>본 실험이 시작됩니다. 실험 소요 시간은 10분 내외입니다.
+  </div>
+  <div class="button next-page-button" id="startTest">Start Test</div>
+  `,
+  `
+  <div id="app">
+    <dlv class="desc-area">
+      <div class="task-desc"></div>
+      <div class="task-nodes-desc"></div>
+      <div class="result-desc"></div>
+    </dlv>
+    <div class="render-area">
+      <svg id="network"></svg>
+      <svg id="legend"></svg>
+    </div>
+  </div>
   `,
   `
   <div class='thankyou'>
