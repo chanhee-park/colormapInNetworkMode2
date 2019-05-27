@@ -7,22 +7,23 @@ const t_questions = [
 const TEST_RESULT = [];
 
 function Start() {
-  $('.login-zone').remove();
-  $('html').scrollTop(0);
-  $('body').html(Page[0]);
+  changePage(0);
   $('#startColorBlind').click(function() {
-    $('html').scrollTop(0);
-    $('body').html(Page[1]);
+    changePage(1);
     $('#completeColorblindTest').click(function() {
       blindTest();
-      $('html').scrollTop(0);
-      $('body').html(Page[2]);
+      changePage(2);
       $('#startTutorial').click(function() {
-        $('body').html(Page[3]);
+        changePage(3);
         tutorialStart();
       });
     });
   });
+}
+
+function changePage(pageNum) {
+  $('html').scrollTop(0);
+  $('body').html(Page[pageNum]);
 }
 
 function tutorialStart() {
@@ -39,11 +40,10 @@ function testStart() {
 }
 
 function tutorialTest(testIdx) {
-  console.warn('Tutorial : ', testIdx);
   if (testIdx >= t_questions.length) {
-    $('body').html(Page[4]);
+    changePage(4);
     $('#startTest').click(function() {
-      $('body').html(Page[5]);
+      changePage(5);
       testStart(0);
     });
     return;
@@ -53,11 +53,10 @@ function tutorialTest(testIdx) {
 }
 
 function userTest(testIdx) {
-  console.warn('Actual : ', testIdx);
   if (testIdx >= questions.length) {
     // End of Test (48)
     writeData();
-    $('body').html(Page[5]);
+    changePage(6);
     return TEST_RESULT;
   }
   let q = questions[testIdx];
@@ -151,7 +150,5 @@ function blindTest() {
   const addedText = color_blind ? '' : 'NOT ';
   TEST_DATA.u_colorblind = color_blind;
   console.log('color blind', color_blind);
-  $('html').scrollTop(0);
-  $('body').html(Page[2]);
   console.log(TEST_DATA);
 }
