@@ -39,7 +39,12 @@ function downloadCSV() {
       retArr.push(colName);
       _.forEach(testResults, r => {
         _.forEach(r.test, t => {
-          if (t.dataName !== '"karate' && r.u_loginTime > 1558931483610) {
+          if (
+            t.dataName !== 'karate' &&
+            t.dataName !== 'dolphins' &&
+            r.u_loginTime > 1558931483610
+          ) {
+            console.log(t.dataName);
             const row = [];
             row.push(r.u_loginTime);
             row.push(r.u_id);
