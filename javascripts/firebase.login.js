@@ -9,6 +9,11 @@ const loginModule = new (function() {
     const ugender = $('input#input-gender').val();
     console.log(uname, uage, ugender);
 
+    if (uname === '_save') {
+      downloadCSV();
+      return;
+    }
+
     if (uname === '' || uage === '' || ugender === '') {
       alert('Please Enter Correct Values');
       return;
