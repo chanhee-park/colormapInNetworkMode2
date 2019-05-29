@@ -83,10 +83,10 @@ function downloadCSV2 () {
         'data',
         'colormap',
         'refCentrality',
-        'span-15-correct',
-        'span-15-time',
-        'span-40-correct',
-        'span-40-time',
+        'span-15',
+        'span-40',
+        'correct',
+        'time',
       ];
       const retColection = [];
       _.forEach(testResults, r => {
@@ -120,7 +120,9 @@ function downloadCSV2 () {
       for (let i = 0; i < sorted.length; i += 2) {
         const val15 = _.values(sorted[i]);
         const val40 = _.values(sorted[i + 1]);
-        const row = val15.slice(0, 9).concat(val15.slice(10, 12)).concat(val40.slice(10, 12))
+        let row = val15.slice(0, 9).concat([true, false]).concat(val15.slice(10, 12))
+        retArr.push(row);
+        row = val40.slice(0, 9).concat([false, true]).concat(val40.slice(10, 12))
         retArr.push(row);
       }
       const csv = arrayToCSV(retArr);
