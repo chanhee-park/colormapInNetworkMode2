@@ -9,17 +9,17 @@ let TEST_DATA = {
   test: []
 };
 
-function writeData() {
+function writeData () {
   console.warn('Write Test Data :', TEST_DATA);
   database.ref('userTest2/' + TEST_DATA.u_id).set(TEST_DATA);
 }
 
-function downloadCSV() {
+function downloadCSV () {
   console.log('Download');
   database
     .ref('/userTest2')
     .once('value')
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       const retArr = [];
       const testResults = snapshot.val();
       const colName = [
@@ -44,7 +44,6 @@ function downloadCSV() {
             t.dataName !== 'dolphins' &&
             r.u_loginTime > 1558931483610
           ) {
-            console.log(t.dataName);
             const row = [];
             row.push(r.u_loginTime);
             row.push(r.u_id);
@@ -67,7 +66,69 @@ function downloadCSV() {
     });
 }
 
-function arrayToCSV(twoDiArray) {
+function downloadCSV2 () {
+  console.log('downloadCSV2');
+  database
+    .ref('/userTest2')
+    .once('value')
+    .then(function (snapshot) {
+      const testResults = snapshot.val();
+      const colName = [
+        'startTime',
+        'user_id',
+        'username',
+        'age',
+        'gender',
+        'color_blindness',
+        'data',
+        'colormap',
+        'refCentrality',
+        'span-15-correct',
+        'span-15-time',
+        'span-40-correct',
+        'span-40-time',
+      ];
+      const retColection = [];
+      _.forEach(testResults, r => {
+        _.forEach(r.test, t => {
+          if (
+            t.dataName !== 'karate' &&
+            t.dataName !== 'dolphins' &&
+            r.u_loginTime > 1558931483610
+          ) {
+            const row = {};
+            row.u_loginTime = r.u_loginTime;
+            row.u_id = (r.u_id);
+            row.u_name = (r.u_name);
+            row.u_age = (r.u_age);
+            row.u_gender = (r.u_gender);
+            row.u_colorblind = (r.u_colorblind);
+            row.dataName = (t.dataName);
+            row.colormap = (t.colormap);
+            row.refCentrality = (t.refCentrality);
+            row.span = (t.span);
+            row.isCorrect = (t.isCorrect);
+            row.elapsedTime = (t.elapsedTime);
+            retColection.push(row);
+          }
+        });
+      });
+
+      const retArr = [];
+      retArr.push(colName);
+      const sorted = _.sortBy(retColection, ['u_id', 'dataName', 'colormap', 'refCentrality', 'span']);
+      for (let i = 0; i < sorted.length; i += 2) {
+        const val15 = _.values(sorted[i]);
+        const val40 = _.values(sorted[i + 1]);
+        const row = val15.slice(0, 9).concat(val15.slice(10, 12)).concat(val40.slice(10, 12))
+        retArr.push(row);
+      }
+      const csv = arrayToCSV(retArr);
+      console.log(csv);
+    });
+}
+
+function arrayToCSV (twoDiArray) {
   //  Modified from: http://stackoverflow.com/questions/17836273/
   //  export-javascript-data-to-csv-file-without-server-interaction
   const csvRows = [];

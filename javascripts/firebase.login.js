@@ -1,6 +1,6 @@
 const $unameInputField = $('input#input-name');
 
-const loginModule = new (function() {
+const loginModule = new (function () {
   const thatLoginModule = this;
   // 로그인 수행
   this.login = () => {
@@ -11,6 +11,11 @@ const loginModule = new (function() {
 
     if (uname === '_save') {
       downloadCSV();
+      return;
+    }
+
+    if (uname === '_save2') {
+      downloadCSV2();
       return;
     }
 
