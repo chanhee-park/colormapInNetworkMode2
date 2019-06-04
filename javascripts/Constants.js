@@ -21,7 +21,7 @@ const Constant = {
   // data(3) cent(2) color(4) span(2) => 48
 };
 
-const Data = new (function() {
+const Data = new (function () {
   this.dataset = {};
   const that = this;
   const allDataNames = [
@@ -33,10 +33,9 @@ const Data = new (function() {
     'jazz'
   ];
   this.road = async () => {
-    for (let i = 0; i < allDataNames.length; i++) {
-      that.dataset[allDataNames[i]] = await $.getJSON(
-        './data/' + allDataNames[i] + '.json'
-      );
+    for (const dataName of allDataNames) {
+      const filename = './data/' + dataName + '.json';
+      that.dataset[dataName] = await $.getJSON(filename);
     }
   };
   this.getData = dataName => {
