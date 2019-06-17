@@ -38,7 +38,7 @@ const Data = new (function () {
       const filename = './data/' + dataName + '.json';
       that.dataset[dataName] = await $.getJSON(filename);
     }
-    that.jetArr = await $.getJSON('jet.json');
+    that.jetArr = await $.getJSON('./data/jet.json');
   };
   this.getData = dataName => {
     return that.dataset[dataName];
