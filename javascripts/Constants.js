@@ -3,20 +3,18 @@ const Constant = {
   // https://github.com/d3/d3-scale-chromatic
   colorMaps: {
     single_blue: d3.interpolateBlues,
-    single_grey: d3.interpolateGreys,
-    inferno: d3.interpolateInferno,
-    divergent_red_blue: d3.interpolateRdYlBu,
+    red_blue: d3.interpolateRdBu,
     viridis: d3.interpolateViridis,
-    'brewer_yellow-green-blue': d3.interpolateYlGnBu,
-    rainbow: d3.interpolateRainbow,
+    jet: Color.matlabJet,
+
+    single_oranges: d3.interpolateOranges,
+    prtogn: d3.interpolatePRGn,
     magma: d3.interpolateMagma,
-    plasma: d3.interpolatePlasma,
-    single_greens: d3.interpolateGreens,
-    heat: d3.interpolateYlOrRd
+    sinebow: d3.interpolateSinebow
   },
   dataNames: ['lesmis', 'football', 'jazz'],
   centralityNames: ['page', 'random'],
-  colorMapNames: ['single_blue', 'rainbow', 'divergent_red_blue', 'viridis'],
+  colorMapNames: ['single_blue', 'jet', 'red_blue', 'viridis'],
   spans: [0.15, 0.4]
   // data(3) cent(2) color(4) span(2) => 48
 };

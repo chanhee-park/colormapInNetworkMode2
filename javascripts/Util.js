@@ -1,4 +1,4 @@
-const Util = new (function() {
+const Util = new (function () {
   /**
    * Change Decimal Number to Hexadecimal (within 0 ~ 255)
    * @param dec

@@ -1,19 +1,20 @@
 let questions = [];
 const t_questions = [
-  ['karate', 'btw', 'brewer_yellow-green-blue', 0.15],
-  ['karate', 'deg_log', 'magma', 0.4],
-  ['dolphins', 'deg_log', 'heat', 0.4]
+  ['karate', 'btw', 'single_oranges', 0.4],
+  ['karate', 'deg_log', 'prtogn', 0.4],
+  ['dolphins', 'deg_log', 'magma', 0.15]
 ];
+
 const TEST_RESULT = [];
 
-function Start() {
+function Start () {
   changePage(0);
-  $('#startColorBlind').click(function() {
+  $('#startColorBlind').click(function () {
     changePage(1);
-    $('#completeColorblindTest').click(function() {
+    $('#completeColorblindTest').click(function () {
       blindTest();
       changePage(2);
-      $('#startTutorial').click(function() {
+      $('#startTutorial').click(function () {
         changePage(3);
         tutorialStart();
       });
@@ -21,28 +22,28 @@ function Start() {
   });
 }
 
-function changePage(pageNum) {
+function changePage (pageNum) {
   $('html').scrollTop(0);
   $('body').html(Page[pageNum]);
 }
 
-function tutorialStart() {
-  setTimeout(function() {
+function tutorialStart () {
+  setTimeout(function () {
     tutorialTest(0);
   }, 1000);
 }
 
-function testStart() {
+function testStart () {
   questions = makeQuestionList();
-  setTimeout(function() {
+  setTimeout(function () {
     userTest(0);
   }, 1000);
 }
 
-function tutorialTest(testIdx) {
+function tutorialTest (testIdx) {
   if (testIdx >= t_questions.length) {
     changePage(4);
-    $('#startTest').click(function() {
+    $('#startTest').click(function () {
       changePage(5);
       testStart(0);
     });
@@ -52,7 +53,7 @@ function tutorialTest(testIdx) {
   drawGraph(q[0], q[1], q[2], q[3], testIdx, 'tutorial'); // data, cnet, color, span
 }
 
-function userTest(testIdx) {
+function userTest (testIdx) {
   if (testIdx >= questions.length) {
     // End of Test (48)
     writeData();
@@ -63,7 +64,7 @@ function userTest(testIdx) {
   drawGraph(q[0], q[1], q[2], q[3], testIdx, 'actual'); // data, cnet, color, span
 }
 
-function getTargetSet(nodes, centrality, spanRatio) {
+function getTargetSet (nodes, centrality, spanRatio) {
   const ret = [];
   const min = getMinValue(nodes, centrality);
   const max = getMaxValue(nodes, centrality);
@@ -93,33 +94,33 @@ function getTargetSet(nodes, centrality, spanRatio) {
   return sorted[0].nodes;
 }
 
-function getMinObj(objs, key) {
+function getMinObj (objs, key) {
   return _.maxBy(objs, o => -Math.abs(o[key]));
 }
 
-function getMaxObj(objs, key) {
+function getMaxObj (objs, key) {
   return _.maxBy(objs, o => Math.abs(o[key]));
 }
 
-function getMinValue(objs, key) {
+function getMinValue (objs, key) {
   const maxObj = getMinObj(objs, key);
   return maxObj[key];
 }
 
-function getMaxValue(objs, key) {
+function getMaxValue (objs, key) {
   const maxObj = getMaxObj(objs, key);
   return maxObj[key];
 }
 
-function getSpanDistance(min, max, span) {
+function getSpanDistance (min, max, span) {
   const interval = max - min;
   return span * interval;
 }
-function getSpanRatio(min, max, distance) {
+function getSpanRatio (min, max, distance) {
   return (distance - min) / (max - min);
 }
 
-function makeQuestionList() {
+function makeQuestionList () {
   const questions = [];
   _.forEach(Constant.dataNames, data => {
     _.forEach(Constant.centralityNames, cent => {
@@ -133,7 +134,7 @@ function makeQuestionList() {
   return Util.shuffle(questions);
 }
 
-function blindTest() {
+function blindTest () {
   console.log('Blind Test');
   const correctVals = [12, 8, 16, 5, 3, 45];
   let color_blind = false;

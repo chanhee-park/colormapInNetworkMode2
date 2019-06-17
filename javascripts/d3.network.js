@@ -1,8 +1,7 @@
-function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
+function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) {
   const startTime = Util.getTime();
   const graph = Data.getData(dataName);
   const colorMap = Constant.colorMaps[colorMapName];
-
   let rotate = Math.random() * 360;
   let scale = 1;
   let moveX = dataName === 'jazz' ? -25 : 0;
@@ -54,24 +53,24 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
   /**
    * Set Axis Information
    */
-  function setAxisInfo() {
+  function setAxisInfo () {
     // position
-    const maxXNode = _.maxBy(graph.nodes, function(node) {
+    const maxXNode = _.maxBy(graph.nodes, function (node) {
       return Math.abs(node.x);
     });
     const maxAbsX = Math.abs(maxXNode.x);
-    const maxYNode = _.maxBy(graph.nodes, function(node) {
+    const maxYNode = _.maxBy(graph.nodes, function (node) {
       return Math.abs(node.y);
     });
     const maxAbsY = Math.abs(maxYNode.y);
     maxAxisVal = maxAbsX > maxAbsY ? maxAbsX : maxAbsY;
 
     // centrality
-    const minCentralityNode = _.minBy(graph.nodes, function(node) {
+    const minCentralityNode = _.minBy(graph.nodes, function (node) {
       return node[refCentrality];
     });
     minCentralityVal = minCentralityNode[refCentrality];
-    const maxCentralityNode = _.maxBy(graph.nodes, function(node) {
+    const maxCentralityNode = _.maxBy(graph.nodes, function (node) {
       return node[refCentrality];
     });
     maxCentralityVal = maxCentralityNode[refCentrality];
@@ -80,7 +79,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
   /**
    * Draw Color Legend
    */
-  function drawColorLegend() {
+  function drawColorLegend () {
     let w_ratio = svgHTML.width.baseVal.value / 300;
 
     legendSvg
@@ -123,13 +122,13 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
   /**
    * Draw Nodes
    */
-  function drawNodes() {
-    _.forEach(graph.nodes, function(node) {
+  function drawNodes () {
+    _.forEach(graph.nodes, function (node) {
       drawNode(node);
     });
   }
 
-  function drawNode(node, type) {
+  function drawNode (node, type) {
     const coord = getCoord({ x: node.x, y: node.y });
     let color = getHexColor(node[refCentrality]);
 
@@ -149,7 +148,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
       })
       .classed('node', true)
       .classed(type, true)
-      .on('click', function() {
+      .on('click', function () {
         console.log(node);
         if (type === 'source') {
           checkAnswerResult(node);
@@ -157,7 +156,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
       });
   }
 
-  function drawRectNode(node, type) {
+  function drawRectNode (node, type) {
     const coord = getCoord({ x: node.x, y: node.y });
     let color = getHexColor(node[refCentrality]);
 
@@ -174,14 +173,14 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
       })
       .classed('node', true)
       .classed(type, true)
-      .on('click', function() {
+      .on('click', function () {
         if (type === 'source') {
           checkAnswerResult(node);
         }
       });
   }
 
-  function drawTargets() {
+  function drawTargets () {
     const targetIds = getTargetSet(graph.nodes, refCentrality, span);
     const targetNodes = Util.shuffle([
       graph.nodes[targetIds[0]],
@@ -205,7 +204,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
     drawNode(T, 'target');
   }
 
-  function showCompares(nodes) {
+  function showCompares (nodes) {
     for (const node of nodes) {
       const relative = Util.getRelativeVal(
         node[refCentrality],
@@ -231,7 +230,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
     }
   }
 
-  function showTarget(node) {
+  function showTarget (node) {
     const relative = Util.getRelativeVal(
       node[refCentrality],
       minCentralityVal,
@@ -257,8 +256,8 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
   /**
    * Draw Links
    */
-  function drawLinks() {
-    _.forEach(graph.links, function(link) {
+  function drawLinks () {
+    _.forEach(graph.links, function (link) {
       const sourceNodeIdx = link.source;
       const targetNodeIdx = link.target;
       const sourceCoord = getCoord(graph.nodes[sourceNodeIdx]);
@@ -278,17 +277,17 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
     });
   }
 
-  function transformDiagram() {
+  function transformDiagram () {
     d3.selectAll('.node').attr(
       'transform',
       `rotate(${rotate}, ${svgWidth / 2}, ${svgHeight /
-        2}) scale(${scale}, ${scale}) translate(${moveX}, ${moveY})`
+      2}) scale(${scale}, ${scale}) translate(${moveX}, ${moveY})`
     );
 
     d3.selectAll('.edge').attr(
       'transform',
       `rotate(${rotate}, ${svgWidth / 2}, ${svgHeight /
-        2}) scale(${scale}, ${scale}) translate(${moveX}, ${moveY})`
+      2}) scale(${scale}, ${scale}) translate(${moveX}, ${moveY})`
     );
   }
 
@@ -298,7 +297,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
    * @param pos
    * @returns {{x: number, y: number}}
    */
-  function getCoord(pos) {
+  function getCoord (pos) {
     return {
       x: svgWidth / 2 + (pos.x / maxAxisVal) * (width / 2),
       y: svgHeight / 2 + (pos.y / maxAxisVal) * (height / 2)
@@ -310,7 +309,7 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
    * @param centrality
    * @returns {string} : rgb({r}, {g}, {b})
    */
-  function getHexColor(centrality) {
+  function getHexColor (centrality) {
     const relativeVal = Util.getRelativeVal(
       centrality,
       minCentralityVal,
@@ -325,13 +324,13 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
     return colorMap(nonZeroVal);
   }
 
-  function setRandCentrality() {
+  function setRandCentrality () {
     _.forEach(graph.nodes, node => {
       node['random'] = Math.random();
     });
   }
 
-  function checkAnswerResult(userAnswerNode) {
+  function checkAnswerResult (userAnswerNode) {
     const elapsedTime = Util.getTimeDiffFrom(startTime);
     const isCorrect = userAnswerNode === correctNode;
     console.log('result : ', elapsedTime, isCorrect);
@@ -357,9 +356,9 @@ function drawGraph(dataName, refCentrality, colorMapName, span, testIdx, mode) {
     console.log(TEST_DATA);
 
     mode === 'tutorial'
-      ? setTimeout(function() {
-          tutorialTest(testIdx + 1);
-        }, 1000)
+      ? setTimeout(function () {
+        tutorialTest(testIdx + 1);
+      }, 1000)
       : userTest(testIdx + 1);
   }
 }
