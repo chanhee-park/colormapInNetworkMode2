@@ -1,5 +1,19 @@
 const Color = new (function () {
   const that = this;
+
+  this.matplotlibJet = function (relVal) {
+    const idx = Math.floor(relVal * 255);
+    const r = Data.jetArr[idx][0];
+    const g = Data.jetArr[idx][1];
+    const b = Data.jetArr[idx][2];
+
+    const rHex = Util.dec2Hex256(r * 255);
+    const gHex = Util.dec2Hex256(g * 255);
+    const bHex = Util.dec2Hex256(b * 255);
+
+    return '#' + rHex + gHex + bHex;
+  }
+
   /**
    * 0 ~ 1 사이의 값을 입력 받아 jet colormap의 RGB값을 반환한다.
    * 각각의 함수는 MatLab의 Jet 팔레트 설명에 따라 작성하였다.

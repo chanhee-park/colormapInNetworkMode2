@@ -5,7 +5,7 @@ const Constant = {
     single_blue: d3.interpolateBlues,
     red_blue: d3.interpolateRdBu,
     viridis: d3.interpolateViridis,
-    jet: Color.matlabJet,
+    jet: Color.matplotlibJet,
 
     single_oranges: d3.interpolateOranges,
     prtogn: d3.interpolatePRGn,
@@ -20,7 +20,6 @@ const Constant = {
 };
 
 const Data = new (function () {
-  this.dataset = {};
   const that = this;
   const allDataNames = [
     'dolphins',
@@ -30,11 +29,16 @@ const Data = new (function () {
     'netscience',
     'jazz'
   ];
+
+  this.dataset = {};
+  this.jetArr = [];
+
   this.road = async () => {
     for (const dataName of allDataNames) {
       const filename = './data/' + dataName + '.json';
       that.dataset[dataName] = await $.getJSON(filename);
     }
+    that.jetArr = await $.getJSON('jet.json');
   };
   this.getData = dataName => {
     return that.dataset[dataName];
