@@ -8,7 +8,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
   let moveY = dataName === 'jazz' ? -70 : 0;
   if (refCentrality === 'random') setRandCentrality();
 
-  console.log(dataName, refCentrality, colorMapName, span);
+  console.log("TEST ", testIdx, ": ", dataName, refCentrality, colorMapName, span);
 
   if (mode === 'tutorial') {
     $('.task-desc').html('<br>Tutorial : ' + (testIdx + 1) + '/3</br>');
@@ -41,7 +41,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
     minCentralityVal = undefined,
     maxCentralityVal = undefined;
 
-  let correctNode = undefined;
+  let C1, C2, T;
 
   setAxisInfo();
   drawColorLegend();
@@ -149,7 +149,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
       .classed('node', true)
       .classed(type, true)
       .on('click', function () {
-        console.log(node);
+        console.log("node cliked : ", node);
         if (type === 'source') {
           checkAnswerResult(node);
         }
@@ -188,69 +188,13 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
       graph.nodes[targetIds[2]]
     ]);
 
-    const C1 = targetNodes[0];
-    const C2 = targetNodes[1];
-    const T = targetNodes[2];
-
-    // showCompares([C1, C2]);
-    // showTarget(T);
-
-    const diff1 = Math.abs(T[refCentrality] - C1[refCentrality]);
-    const diff2 = Math.abs(T[refCentrality] - C2[refCentrality]);
-    correctNode = diff1 < diff2 ? C1 : C2;
+    C1 = targetNodes[0];
+    C2 = targetNodes[1];
+    T = targetNodes[2];
 
     drawRectNode(C1, 'source');
     drawRectNode(C2, 'source');
     drawNode(T, 'target');
-  }
-
-  function showCompares (nodes) {
-    for (const node of nodes) {
-      const relative = Util.getRelativeVal(
-        node[refCentrality],
-        minCentralityVal,
-        maxCentralityVal
-      );
-      const virtualCentrality = Util.getAbsoluteVal(
-        relative,
-        minCentralityVal,
-        maxCentralityVal
-      );
-      let w_ratio = svgHTML.width.baseVal.value / 300;
-      const color = getHexColor(virtualCentrality);
-
-      legendSvg.append('rect').attrs({
-        x: legendX + relative * 255 * w_ratio,
-        y: legendY + legendSize + 5,
-        width: 25,
-        height: 25,
-        fill: color,
-        stroke: '#000'
-      });
-    }
-  }
-
-  function showTarget (node) {
-    const relative = Util.getRelativeVal(
-      node[refCentrality],
-      minCentralityVal,
-      maxCentralityVal
-    );
-    const virtualCentrality = Util.getAbsoluteVal(
-      relative,
-      minCentralityVal,
-      maxCentralityVal
-    );
-    let w_ratio = svgHTML.width.baseVal.value / 300;
-    const color = getHexColor(virtualCentrality);
-
-    legendSvg.append('circle').attrs({
-      cx: legendX + relative * 255 * w_ratio + 12.5,
-      cy: legendY + legendSize + 5 + 12.5,
-      r: 12.5,
-      fill: color,
-      stroke: '#000'
-    });
   }
 
   /**
@@ -331,6 +275,10 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
   }
 
   function checkAnswerResult (userAnswerNode) {
+    const diff1 = Math.abs(T[refCentrality] - C1[refCentrality]);
+    const diff2 = Math.abs(T[refCentrality] - C2[refCentrality]);
+    const correctNode = diff1 < diff2 ? C1 : C2;
+
     const elapsedTime = Util.getTimeDiffFrom(startTime);
     const isCorrect = userAnswerNode === correctNode;
     console.log('result : ', elapsedTime, isCorrect);
@@ -343,16 +291,24 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
         .text(elapsedTime + ', ' + classToAdd)
         .removeClass(classToRemove)
         .addClass(classToAdd);
+    } else {
+      console.log(T, C1, C2);
+      TEST_DATA.test.push({
+        dataName: dataName,
+        refCentrality: refCentrality,
+        colormap: colorMapName,
+        span: span,
+        elapsedTime: elapsedTime,
+        isCorrect: isCorrect,
+        targetValue: T[refCentrality],
+        compare1Value: C1[refCentrality],
+        compare2Value: C2[refCentrality],
+        targetLum: getHexColor(T[refCentrality]),
+        compare1Lum: getHexColor(C1[refCentrality]),
+        compare2Lum: getHexColor(C2[refCentrality]),
+      });
     }
 
-    TEST_DATA.test.push({
-      dataName: dataName,
-      refCentrality: refCentrality,
-      colormap: colorMapName,
-      span: span,
-      elapsedTime: elapsedTime,
-      isCorrect: isCorrect
-    });
     console.log(TEST_DATA);
 
     mode === 'tutorial'

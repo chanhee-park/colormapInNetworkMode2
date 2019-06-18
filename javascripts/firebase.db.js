@@ -9,12 +9,12 @@ let TEST_DATA = {
   test: []
 };
 
-function writeData() {
+function writeData () {
   console.warn('Write Test Data :', TEST_DATA);
-  database.ref('userTest2/' + TEST_DATA.u_id).set(TEST_DATA);
+  database.ref('userTest3/' + TEST_DATA.u_id).set(TEST_DATA);
 }
 
-function downloadCSV() {
+function downloadCSV () {
   console.log('Download');
   database
     .ref('/userTest2')
@@ -66,7 +66,7 @@ function downloadCSV() {
     });
 }
 
-function downloadCSV2() {
+function downloadCSV2 () {
   console.log('downloadCSV2');
   database
     .ref('/userTest2')
@@ -130,7 +130,7 @@ function downloadCSV2() {
     });
 }
 
-function downloadCSV3() {
+function downloadCSV3 () {
   console.log('downloadCSV3');
   database
     .ref('/userTest2')
@@ -199,7 +199,7 @@ function downloadCSV3() {
 }
 
 
-function arrayToCSV(twoDiArray) {
+function arrayToCSV (twoDiArray) {
   //  Modified from: http://stackoverflow.com/questions/17836273/
   //  export-javascript-data-to-csv-file-without-server-interaction
   const csvRows = [];

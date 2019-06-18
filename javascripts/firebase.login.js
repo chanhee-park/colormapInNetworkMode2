@@ -1,9 +1,11 @@
-const $unameInputField = $('input#input-name');
+let isLogin = false;
 
 const loginModule = new (function () {
   const thatLoginModule = this;
   // 로그인 수행
   this.login = () => {
+    if (isLogin) return;
+
     const uname = $('input#input-name').val();
     const uage = $('input#input-age').val();
     const ugender = $('input#input-gender').val();
