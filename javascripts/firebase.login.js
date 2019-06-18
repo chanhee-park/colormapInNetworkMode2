@@ -4,8 +4,6 @@ const loginModule = new (function () {
   const thatLoginModule = this;
   // 로그인 수행
   this.login = () => {
-    if (isLogin) return;
-
     const uname = $('input#input-name').val();
     const uage = $('input#input-age').val();
     const ugender = $('input#input-gender').val();
@@ -57,10 +55,16 @@ const loginModule = new (function () {
     TEST_DATA.u_signed = true;
   };
 
-  // 유저 사항 변경시 (로그인 / 로그아웃) 불리는 함수
+  // 유저 사항 변경시 (접속 / 로그인 / 로그아웃) 불리는 함수
   FirebaseAuth.onAuthStateChanged(user => {
+    if (isLogin) {
+      return;
+    }
+
     if (user) {
       // User is signed in.
+      isLogin = true;
+
       const uid = user.uid;
       const uname = $('input#input-name').val();
       const uage = $('input#input-age').val();

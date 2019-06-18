@@ -292,7 +292,6 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
         .removeClass(classToRemove)
         .addClass(classToAdd);
     } else {
-      console.log(T, C1, C2);
       TEST_DATA.test.push({
         dataName: dataName,
         refCentrality: refCentrality,
