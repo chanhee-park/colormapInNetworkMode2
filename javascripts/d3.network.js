@@ -108,7 +108,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
         minCentralityVal,
         maxCentralityVal
       );
-      const color = getHexColor(virtualCentrality);
+      const color = getColorString(virtualCentrality);
       legendSvg.append('rect').attrs({
         x: legendX + i * w_ratio,
         y: legendY,
@@ -130,7 +130,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
 
   function drawNode (node, type) {
     const coord = getCoord({ x: node.x, y: node.y });
-    let color = getHexColor(node[refCentrality]);
+    let color = getColorString(node[refCentrality]);
 
     let addedRadius = type !== undefined ? 4 : 0;
     let stroke = type === 'source' ? '#F00' : 'none';
@@ -158,7 +158,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
 
   function drawRectNode (node, type) {
     const coord = getCoord({ x: node.x, y: node.y });
-    let color = getHexColor(node[refCentrality]);
+    let color = getColorString(node[refCentrality]);
 
     svg
       .append('rect')
@@ -251,21 +251,18 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
   /**
    * Get Hexadecimal Color from centrality
    * @param centrality
-   * @returns {string} : rgb({r}, {g}, {b})
+   * @returns {rgbColor: string} such as 'rgb({r}, {g}, {b})' or '#F0E357'
    */
-  function getHexColor (centrality) {
-    const relativeVal = Util.getRelativeVal(
+  function getColorString (centrality) {
+    let relativeVal = Util.getRelativeVal(
       centrality,
       minCentralityVal,
       maxCentralityVal
     );
-    let nonZeroVal = relativeVal;
     if (colorMapName === 'single_blue') {
-      nonZeroVal = (relativeVal + 0.2) / 1.2;
-    } else if (colorMapName === 'rainbow') {
-      nonZeroVal = (relativeVal + 0.3) / 1.3;
+      relativeVal = (relativeVal + 0.2) / 1.2; // [0.167, 1.000]
     }
-    return colorMap(nonZeroVal);
+    return colorMap(relativeVal);
   }
 
   function setRandCentrality () {
@@ -302,14 +299,17 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
         targetValue: (T[refCentrality] - minCentralityVal) / (maxCentralityVal - minCentralityVal),
         compare1Value: (C1[refCentrality] - minCentralityVal) / (maxCentralityVal - minCentralityVal),
         compare2Value: (C2[refCentrality] - minCentralityVal) / (maxCentralityVal - minCentralityVal),
-        targetLum: getHexColor(T[refCentrality]),
-        compare1Lum: getHexColor(C1[refCentrality]),
-        compare2Lum: getHexColor(C2[refCentrality]),
+        targetColor: Color.getRGB(getColorString(T[refCentrality])),
+        compare1Color: Color.getRGB(getColorString(C1[refCentrality])),
+        compare2Color: Color.getRGB(getColorString(C2[refCentrality])),
+        targetLum: Color.getLuminance(Color.getRGB(getColorString(T[refCentrality]))),
+        compare1Lum: Color.getLuminance(Color.getRGB(getColorString(C1[refCentrality]))),
+        compare2Lum: Color.getLuminance(Color.getRGB(getColorString(C2[refCentrality]))),
+        selectedNode: diff1 < diff2 ? 'compare1' : 'compare2',
+        correctNode: correctNode === C1 ? 'compare1' : 'compare2',
       });
     }
-
     console.log(TEST_DATA);
-
     mode === 'tutorial'
       ? setTimeout(function () {
         tutorialTest(testIdx + 1);

@@ -8,6 +8,10 @@ const Util = new (function () {
     return (dec <= 16 ? '0' : '') + Math.floor(dec).toString(16);
   };
 
+  this.hex256toDec = hex256 => {
+    return parseInt(hex256, 16);
+  }
+
   /**
    * Change from [min, max] to [0, 1]
    * @param val

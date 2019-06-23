@@ -1,8 +1,8 @@
 let questions = [];
 const t_questions = [
   ['karate', 'btw', 'single_oranges', 0.4],
+  ['dolphins', 'deg_log', 'magma', 0.15],
   ['karate', 'deg_log', 'prtogn', 0.4],
-  ['dolphins', 'deg_log', 'magma', 0.15]
 ];
 
 const TEST_RESULT = [];

@@ -3,7 +3,7 @@ const Constant = {
   // https://github.com/d3/d3-scale-chromatic
   colorMaps: {
     single_blue: d3.interpolateBlues,
-    red_blue: d3.interpolateRdBu,
+    red_blue: d3.interpolateRdYlBu,
     viridis: d3.interpolateViridis,
     jet: Color.matplotlibJet,
 

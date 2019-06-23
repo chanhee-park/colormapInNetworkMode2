@@ -14,6 +14,46 @@ const Color = new (function () {
     return '#' + rHex + gHex + bHex;
   }
 
+
+  /** 
+   * Get Red, Green and Blue values [0~255] from color string such as 'rgb({r}, {g}, {b})' or '#F0E357'
+   * @param colorString: string
+   * @returns {{r: number, g: number, b:number}}: object
+   */
+  this.getRGB = function (colorString) {
+    let r, g, b;
+    if (colorString[0] === '#') {
+      const rHex = colorString.slice(1, 3);
+      const gHex = colorString.slice(3, 5);
+      const bHex = colorString.slice(5, 7);
+      r = Util.hex256toDec(rHex);
+      g = Util.hex256toDec(gHex);
+      b = Util.hex256toDec(bHex);
+    } else if (colorString.slice(0, 4) === 'rgb(') {
+      const colorNumbers = colorString.replace('rgb(', '').replace(')', '');
+      const colorArr = colorNumbers.split(', ');
+      r = parseInt(colorArr[0]);
+      g = parseInt(colorArr[1]);
+      b = parseInt(colorArr[2]);
+    }
+    return { r, g, b };
+  }
+
+  /** 
+   * Article Title : arious colour spaces and colour space conversion algorithms.
+   * Authors : Nishad, P. M., and R. Manicka Chezian
+   * Journal : Journal of Global Research in Computer Science 4.1
+   * Year : 2013
+   * page : 44-48
+   * https://pdfs.semanticscholar.org/bfcb/102f146009b8de3d61aecf1bce27311278f5.pdf
+   * @param {{r: number, g: number, b:number}}: object
+   * @returns {luminance}: number
+   */
+  this.getLuminance = function (rgb) {
+    const k = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+    return Math.round(0.859 * k) + 16;
+  }
+
   /**
    * 0 ~ 1 사이의 값을 입력 받아 jet colormap의 RGB값을 반환한다.
    * 각각의 함수는 MatLab의 Jet 팔레트 설명에 따라 작성하였다.
