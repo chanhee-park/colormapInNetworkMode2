@@ -259,9 +259,6 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
       minCentralityVal,
       maxCentralityVal
     );
-    if (colorMapName === 'single_blue') {
-      relativeVal = (relativeVal + 0.2) / 1.2; // [0.167, 1.000]
-    }
     return colorMap(relativeVal);
   }
 
