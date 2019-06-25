@@ -4,27 +4,26 @@ const loginModule = new (function () {
   const thatLoginModule = this;
   // 로그인 수행
   this.login = () => {
-    const uname = $('input#input-name').val();
     const uage = $('input#input-age').val();
     const ugender = $('input#input-gender').val();
-    console.log(uname, uage, ugender);
+    console.log(uage, ugender);
 
-    if (uname === '_save') {
+    if (uage === '_save') {
       downloadCSV();
       return;
     }
 
-    if (uname === '_save2') {
+    if (uage === '_save2') {
       downloadCSV2();
       return;
     }
 
-    if (uname === '_save3') {
+    if (uage === '_save3') {
       downloadCSV3();
       return;
     }
 
-    if (uname === '' || uage === '' || ugender === '') {
+    if (uage === '' || ugender === '') {
       alert('Please Enter Correct Values');
       return;
     }
@@ -47,9 +46,8 @@ const loginModule = new (function () {
   };
 
   // 유저 정보 저장
-  this.setUserInfo = (id, name, gender, age) => {
+  this.setUserInfo = (id, gender, age) => {
     TEST_DATA.u_id = id;
-    TEST_DATA.u_name = name;
     TEST_DATA.u_gender = gender;
     TEST_DATA.u_age = age;
     TEST_DATA.u_signed = true;
@@ -66,16 +64,15 @@ const loginModule = new (function () {
       isLogin = true;
 
       const uid = user.uid;
-      const uname = $('input#input-name').val();
       const uage = $('input#input-age').val();
       const ugender = $('input#input-gender').val();
-      console.log(uname, uage, ugender + ' is signed in.');
+      console.log(uage, ugender + ' is signed in.');
 
-      thatLoginModule.setUserInfo(uid, uname, ugender, uage);
+      thatLoginModule.setUserInfo(uid, ugender, uage);
 
-      if (uname === '_save_csv') {
+      if (uage === '_save_csv') {
         saveCSV();
-      } else if (uname === '_save_csv_2') {
+      } else if (uage === '_save_csv_2') {
         saveCSV2();
       }
 
