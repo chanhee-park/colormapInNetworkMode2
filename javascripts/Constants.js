@@ -239,7 +239,7 @@ const Page = [
   `,
   `
   <div class='thankyou'>
-    User study end here. Thank you so much for you time.
+    User study ends here. Thank you so much for your time.
     <br><br>실험이 종료되었습니다. 참여해주셔서 감사합니다.
   </div>`
 ];
