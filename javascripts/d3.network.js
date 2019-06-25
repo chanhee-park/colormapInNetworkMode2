@@ -195,7 +195,78 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
     drawRectNode(C1, 'source');
     drawRectNode(C2, 'source');
     drawNode(T, 'target');
+
+    showDebugText(T, C1, C2);
+    showNodeInLegend(C1, 'r');
+    showNodeInLegend(C2, 'r');
+    showNodeInLegend(T, 'c');
   }
+
+  function showNodeInLegend (node, type) {
+    const relative = Util.getRelativeVal(
+      node[refCentrality],
+      minCentralityVal,
+      maxCentralityVal
+    );
+    const virtualCentrality = Util.getAbsoluteVal(
+      relative,
+      minCentralityVal,
+      maxCentralityVal
+    );
+    let w_ratio = svgHTML.width.baseVal.value / 300;
+    const color = getColorString(virtualCentrality);
+
+    if (type === 'r') {
+      legendSvg.append('rect').attrs({
+        x: legendX + relative * 255 * w_ratio,
+        y: legendY + legendSize + 5,
+        width: 25,
+        height: 25,
+        fill: color,
+        stroke: '#000'
+      });
+    } else if (type === 'c') {
+      legendSvg.append('circle').attrs({
+        cx: legendX + relative * 255 * w_ratio + 13,
+        cy: legendY + legendSize + 5 + 13,
+        r: 13,
+        fill: color,
+        stroke: '#000'
+      });
+    }
+  }
+
+  function showDebugText (T, C1, C2) {
+    $('.task-nodes-desc').html(
+      'span:' + span +
+      '<br> C1: ' +
+      Util.roundFrom(
+        Util.getRelativeVal(
+          C1[refCentrality],
+          minCentralityVal,
+          maxCentralityVal
+        )
+      ) +
+      '<br> C2: ' +
+      Util.roundFrom(
+        Util.getRelativeVal(
+          C2[refCentrality],
+          minCentralityVal,
+          maxCentralityVal
+        )
+      ) +
+      '<br> T : ' +
+      Util.roundFrom(
+        Util.getRelativeVal(
+          T[refCentrality],
+          minCentralityVal,
+          maxCentralityVal
+        )
+      ) +
+      '<br>'
+    );
+  }
+
 
   /**
    * Draw Links

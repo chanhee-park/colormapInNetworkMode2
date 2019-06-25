@@ -64,6 +64,7 @@ function userTest (testIdx) {
   drawGraph(q[0], q[1], q[2], q[3], testIdx, 'actual'); // data, cnet, color, span
 }
 
+
 function getTargetSet (nodes, centrality, spanRatio) {
   const ret = [];
   const min = getMinValue(nodes, centrality);

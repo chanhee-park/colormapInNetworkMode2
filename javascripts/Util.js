@@ -33,6 +33,12 @@ const Util = new (function () {
     return (max - min) * ratio + min;
   };
 
+  this.roundFrom = (number, decimalPlaces = 3) => {
+    console.log(number, decimalPlaces)
+    const k = Math.pow(10, decimalPlaces);
+    return Math.round(number * k) / k;
+  }
+
   this.getTime = () => {
     return new Date().getTime();
   };
