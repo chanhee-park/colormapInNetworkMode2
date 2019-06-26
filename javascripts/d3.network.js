@@ -266,11 +266,11 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
       ) +
       '<br><br>Luminances' +
       '<br> C1: ' +
-      Color.getLuminance(Color.getRGB(getColorString(C1[refCentrality]))) +
+      Util.roundFrom(Color.getLuminance(Color.getRGB(getColorString(C1[refCentrality])))) +
       '<br> C2: ' +
-      Color.getLuminance(Color.getRGB(getColorString(C2[refCentrality]))) +
+      Util.roundFrom(Color.getLuminance(Color.getRGB(getColorString(C2[refCentrality])))) +
       '<br> T : ' +
-      Color.getLuminance(Color.getRGB(getColorString(T[refCentrality])))
+      Util.roundFrom(Color.getLuminance(Color.getRGB(getColorString(T[refCentrality]))))
     );
   }
 

@@ -199,7 +199,7 @@ const Page = [
   `,
   `
   <div class='thankyou'>
-    Prior to the actual User study, there are three practice tasks to get familair with the user study.
+    Prior to the actual User study, there are three practice tasks to get familiar with the user study.
     <br><br>본 실험을 시작하기에 앞서, 이 실험에 친숙해지기 위한 3번의 튜토리얼 문제가 있습니다. 
   </div>
   <div class="button next-page-button" id="startTutorial">Start Tutorial</div>

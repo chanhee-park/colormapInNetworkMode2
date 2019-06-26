@@ -50,8 +50,9 @@ const Color = new (function () {
    * @returns {luminance}: number
    */
   this.getLuminance = function (rgb) {
-    const k = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
-    return Math.round(0.859 * k) + 16;
+    return (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) * 100 / 255;
+    // const k = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+    // return Math.round(0.859 * k) + 16;
   }
 
   /**
