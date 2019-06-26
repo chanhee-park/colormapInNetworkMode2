@@ -239,6 +239,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
   function showDebugText (T, C1, C2) {
     $('.task-nodes-desc').html(
       'span:' + span +
+      '<br><br>Values' +
       '<br> C1: ' +
       Util.roundFrom(
         Util.getRelativeVal(
@@ -263,7 +264,13 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
           maxCentralityVal
         )
       ) +
-      '<br>'
+      '<br><br>Luminances' +
+      '<br> C1: ' +
+      Color.getLuminance(Color.getRGB(getColorString(C1[refCentrality]))) +
+      '<br> C2: ' +
+      Color.getLuminance(Color.getRGB(getColorString(C2[refCentrality]))) +
+      '<br> T : ' +
+      Color.getLuminance(Color.getRGB(getColorString(T[refCentrality])))
     );
   }
 

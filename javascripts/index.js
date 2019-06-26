@@ -1,8 +1,8 @@
 let questions = [];
 const t_questions = [
-  ['karate', 'btw', 'single_oranges', 0.4],
-  ['dolphins', 'deg_log', 'magma', 0.15],
-  ['karate', 'deg_log', 'prtogn', 0.4],
+  ['karate', 'btw', 'single_oranges', 0.40],
+  ['dolphins', 'deg_log', 'magma', 0.40],
+  ['dolphins', 'deg_log', 'prtogn', 0.15],
 ];
 
 const TEST_RESULT = [];
@@ -21,6 +21,9 @@ function Start () {
     });
   });
 }
+
+// changePage(3);
+// tutorialStart();
 
 function changePage (pageNum) {
   $('html').scrollTop(0);
@@ -70,7 +73,7 @@ function getTargetSet (nodes, centrality, spanRatio) {
   const min = getMinValue(nodes, centrality);
   const max = getMaxValue(nodes, centrality);
   const spanDistance = getSpanDistance(min, max, spanRatio);
-  const ct_distance = spanRatio > 0.2 ? 0.5 : 5;
+  const ct_distance = spanRatio > 0.2 ? 0.5 : 5.0;
   const len = nodes.length;
   for (let i = 0; i < len - 2; i++) {
     for (let j = i + 1; j < len - 1; j++) {
@@ -92,6 +95,7 @@ function getTargetSet (nodes, centrality, spanRatio) {
     }
   }
   const sorted = _.sortBy(ret, ['error', 'distance']);
+  console.log(sorted);
   return sorted[0].nodes;
 }
 
