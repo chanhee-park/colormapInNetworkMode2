@@ -22,9 +22,6 @@ function Start () {
   });
 }
 
-// changePage(3);
-// tutorialStart();
-
 function changePage (pageNum) {
   $('html').scrollTop(0);
   $('body').html(Page[pageNum]);
@@ -38,6 +35,7 @@ function tutorialStart () {
 
 function testStart () {
   questions = makeQuestionList();
+  console.log("questions:", questions);
   setTimeout(function () {
     userTest(0);
   }, 1000);
@@ -95,7 +93,6 @@ function getTargetSet (nodes, centrality, spanRatio) {
     }
   }
   const sorted = _.sortBy(ret, ['error', 'distance']);
-  console.log(sorted);
   return sorted[0].nodes;
 }
 
@@ -140,7 +137,6 @@ function makeQuestionList () {
 }
 
 function blindTest () {
-  console.log('Blind Test');
   const correctVals = [12, 8, 16, 5, 3, 45];
   let color_blind = false;
 
@@ -155,6 +151,4 @@ function blindTest () {
   }
   const addedText = color_blind ? '' : 'NOT ';
   TEST_DATA.u_colorblind = color_blind;
-  console.log('color blind', color_blind);
-  console.log(TEST_DATA);
 }

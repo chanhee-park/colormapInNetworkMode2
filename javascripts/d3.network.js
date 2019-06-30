@@ -8,7 +8,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
   let moveY = dataName === 'jazz' ? -70 : 0;
   if (refCentrality === 'random') setRandCentrality();
 
-  console.log("TEST ", testIdx, ": ", dataName, refCentrality, colorMapName, span);
+  console.log("TASK", testIdx, ": ", dataName, refCentrality, colorMapName, span);
 
   if (mode === 'tutorial') {
     $('.task-desc').html('<br>Tutorial : ' + (testIdx + 1) + '/3</br>');
@@ -147,13 +147,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
         'stroke-width': '3px'
       })
       .classed('node', true)
-      .classed(type, true)
-      .on('click', function () {
-        console.log("node cliked : ", node);
-        if (type === 'source') {
-          checkAnswerResult(node);
-        }
-      });
+      .classed(type, true);
   }
 
   function drawRectNode (node, type) {
@@ -174,9 +168,9 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
       .classed('node', true)
       .classed(type, true)
       .on('click', function () {
-        if (type === 'source') {
-          checkAnswerResult(node);
-        }
+        d3.selectAll('.node').on('click', null); // 아래 함수들이 시간 소모가 많아서, 이벤트 삭제를 먼저 해준다. 
+        showNextTask();
+        checkAnswerResult(node);
       });
   }
 
@@ -346,6 +340,18 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
     });
   }
 
+  function showNextTask () {
+    if (mode === 'tutorial') {
+      setTimeout(function () {
+        tutorialTest(testIdx + 1);
+      }, 2500)
+    } else {
+      svg.selectAll('*').remove();
+      legendSvg.selectAll('*').remove();
+      userTest(testIdx + 1);
+    }
+  }
+
   function checkAnswerResult (userAnswerNode) {
     const diff1 = Math.abs(T[refCentrality] - C1[refCentrality]);
     const diff2 = Math.abs(T[refCentrality] - C2[refCentrality]);
@@ -353,7 +359,7 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
 
     const elapsedTime = Util.getTimeDiffFrom(startTime);
     const isCorrect = userAnswerNode === correctNode;
-    console.log('result : ', elapsedTime, isCorrect);
+    console.log('RESULT:', elapsedTime, isCorrect);
 
     const classToAdd = isCorrect ? 'correct' : 'wrong';
     const classToRemove = !isCorrect ? 'correct' : 'wrong';
@@ -384,11 +390,6 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
         correctNode: correctNode === C1 ? 'compare1' : 'compare2',
       });
     }
-    console.log(TEST_DATA);
-    mode === 'tutorial'
-      ? setTimeout(function () {
-        tutorialTest(testIdx + 1);
-      }, 1000)
-      : userTest(testIdx + 1);
+    console.log("TEST_DATA: ", TEST_DATA);
   }
 }

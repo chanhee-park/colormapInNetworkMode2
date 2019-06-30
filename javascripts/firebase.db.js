@@ -1,6 +1,5 @@
 let TEST_DATA = {
   u_id: '',
-  u_name: '',
   u_gender: '',
   u_age: '',
   u_loginTime: Date.now(),

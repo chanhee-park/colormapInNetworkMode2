@@ -34,7 +34,6 @@ const Util = new (function () {
   };
 
   this.roundFrom = (number, decimalPlaces = 3) => {
-    console.log(number, decimalPlaces)
     const k = Math.pow(10, decimalPlaces);
     return Math.round(number * k) / k;
   }
