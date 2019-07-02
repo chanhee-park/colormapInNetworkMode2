@@ -169,8 +169,8 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
       .classed(type, true)
       .on('click', function () {
         d3.selectAll('.node').on('click', null); // 아래 함수들이 시간 소모가 많아서, 이벤트 삭제를 먼저 해준다. 
-        showNextTask();
         checkAnswerResult(node);
+        showNextTask();
       });
   }
 

@@ -18,11 +18,6 @@ const loginModule = new (function () {
       return;
     }
 
-    if (uage === '_save3') {
-      downloadCSV3();
-      return;
-    }
-
     if (uage === '' || ugender === '') {
       alert('Please Enter Correct Values');
       return;

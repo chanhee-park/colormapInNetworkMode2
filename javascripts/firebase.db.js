@@ -13,40 +13,41 @@ function writeData () {
   database.ref('userTest3/' + TEST_DATA.u_id).set(TEST_DATA);
 }
 
+downloadCSV2();
 function downloadCSV () {
   console.log('Download');
   database
-    .ref('/userTest2')
+    .ref('/userTest3')
     .once('value')
     .then(function (snapshot) {
       const retArr = [];
       const testResults = snapshot.val();
       const colName = [
-        'startTime',
+        'create_time',
         'user_id',
-        'username',
         'age',
         'gender',
         'color_blindness',
         'data',
         'colormap',
-        'refCentrality',
+        'NodeAttributes',
         'span',
         'isCorrect',
-        'time'
+        'time',
+        'luminance_left_C.Node',
+        'luminance_right_C.Node',
+        'luminance_target',
+        'TargetNode_value',
+        'ComparisonNode_right',
+        'ComparisonNode_left',
       ];
       retArr.push(colName);
       _.forEach(testResults, r => {
         _.forEach(r.test, t => {
-          if (
-            t.dataName !== 'karate' &&
-            t.dataName !== 'dolphins' &&
-            r.u_loginTime > 1558931483610
-          ) {
+          if (r.u_loginTime > 1561912032240) {
             const row = [];
-            row.push(r.u_loginTime);
+            row.push(new Date(r.u_loginTime).toString());
             row.push(r.u_id);
-            row.push(r.u_name);
             row.push(r.u_age);
             row.push(r.u_gender);
             row.push(r.u_colorblind);
@@ -56,6 +57,12 @@ function downloadCSV () {
             row.push(t.span);
             row.push(t.isCorrect);
             row.push(t.elapsedTime);
+            row.push(t.compare1Value < t.compare2Value ? t.compare1Lum : t.compare2Lum);
+            row.push(t.compare1Value < t.compare2Value ? t.compare2Lum : t.compare1Lum);
+            row.push(t.targetLum);
+            row.push(t.targetValue);
+            row.push(t.compare1Value < t.compare2Value ? t.compare2Value : t.compare1Value);
+            row.push(t.compare1Value < t.compare2Value ? t.compare1Value : t.compare2Value);
             retArr.push(row);
           }
         });
@@ -68,104 +75,40 @@ function downloadCSV () {
 function downloadCSV2 () {
   console.log('downloadCSV2');
   database
-    .ref('/userTest2')
+    .ref('/userTest3')
     .once('value')
     .then(function (snapshot) {
       const testResults = snapshot.val();
       const colName = [
-        'startTime',
+        'create_time',
         'user_id',
-        'username',
         'age',
         'gender',
         'color_blindness',
         'data',
-        'colormap',
-        'refCentrality',
-        'span-15',
-        'span-40',
-        'correct',
-        'time',
+        'NodeAttributes',
+        'span',
+        'rainbow-c',
+        'rainbow-t',
+        'divergent-c',
+        'divergent-t',
+        'blue-c',
+        'blue-t',
+        'viridis-c',
+        'viridis-t',
       ];
       const retColection = [];
       _.forEach(testResults, r => {
         _.forEach(r.test, t => {
-          if (
-            t.dataName !== 'karate' &&
-            t.dataName !== 'dolphins' &&
-            r.u_loginTime > 1558931483610
-          ) {
+          if (r.u_loginTime > 1558931483610) {
             const row = {};
-            row.u_loginTime = r.u_loginTime;
+            row.created_time = (new Date(r.u_loginTime).toString())
             row.u_id = (r.u_id);
-            row.u_name = (r.u_name);
             row.u_age = (r.u_age);
             row.u_gender = (r.u_gender);
             row.u_colorblind = (r.u_colorblind);
             row.dataName = (t.dataName);
-            row.colormap = (t.colormap);
-            row.refCentrality = (t.refCentrality);
-            row.span = (t.span);
-            row.isCorrect = (t.isCorrect);
-            row.elapsedTime = (t.elapsedTime);
-            retColection.push(row);
-          }
-        });
-      });
-
-      const retArr = [];
-      retArr.push(colName);
-      const sorted = _.sortBy(retColection, ['u_id', 'dataName', 'colormap', 'refCentrality', 'span']);
-      for (let i = 0; i < sorted.length; i += 2) {
-        const val15 = _.values(sorted[i]);
-        const val40 = _.values(sorted[i + 1]);
-        let row = val15.slice(0, 9).concat([true, false]).concat(val15.slice(10, 12))
-        retArr.push(row);
-        row = val40.slice(0, 9).concat([false, true]).concat(val40.slice(10, 12))
-        retArr.push(row);
-      }
-      const csv = arrayToCSV(retArr);
-      console.log(csv);
-    });
-}
-
-function downloadCSV3 () {
-  console.log('downloadCSV3');
-  database
-    .ref('/userTest2')
-    .once('value')
-    .then(function (snapshot) {
-      const testResults = snapshot.val();
-      const colName = [
-        'user_id',
-        'username',
-        'color_blindness',
-        'data',
-        'centrality',
-        'span',
-        'blue-c',
-        'blue-t',
-        'rainbow-c',
-        'rainbow-t',
-        'viridis-c',
-        'viridis-t',
-        'divergent-c',
-        'divergent-t',
-      ];
-      const retColection = [];
-      _.forEach(testResults, r => {
-        _.forEach(r.test, t => {
-          if (
-            t.dataName !== 'karate' &&
-            t.dataName !== 'dolphins' &&
-            r.u_loginTime > 1558931483610
-          ) {
-            const row = {};
-            row.u_id = (r.u_id);
-            row.u_name = (r.u_name);
-            row.u_colorblind = (r.u_colorblind);
-            row.dataName = (t.dataName);
-            row.refCentrality = (t.refCentrality);
+            row.NodeAttributes = (t.refCentrality);
             row.span = (t.span);
             row.colormap = (t.colormap);
             row.isCorrect = (t.isCorrect);
@@ -174,29 +117,25 @@ function downloadCSV3 () {
           }
         });
       });
-
       const retArr = [];
       retArr.push(colName);
-      const sorted = _.sortBy(retColection, ['u_id', 'dataName', 'refCentrality', 'span', 'colormap']);
-
+      const sorted = _.sortBy(retColection, ['u_id', 'dataName', 'NodeAttributes', 'span', 'colormap']);
       for (let i = 0; i < sorted.length; i += 4) {
-        const val_div = _.values(sorted[i]);
-        const val_rain = _.values(sorted[i + 1]);
+        const val_jet = _.values(sorted[i]);
+        const val_rb = _.values(sorted[i + 1]);
         const val_blue = _.values(sorted[i + 2]);
         const val_viridis = _.values(sorted[i + 3]);
-
-        let row = val_blue.slice(0, 6)
-          .concat(val_blue.slice(7, 9))
-          .concat(val_rain.slice(7, 9))
-          .concat(val_viridis.slice(7, 9))
-          .concat(val_div.slice(7, 9));
+        let row = val_jet.slice(0, 8)
+          .concat(val_jet.slice(9, 11))
+          .concat(val_rb.slice(9, 11))
+          .concat(val_blue.slice(9, 11))
+          .concat(val_viridis.slice(9, 11));
         retArr.push(row);
       }
       const csv = arrayToCSV(retArr);
       console.log(csv);
     });
 }
-
 
 function arrayToCSV (twoDiArray) {
   //  Modified from: http://stackoverflow.com/questions/17836273/
