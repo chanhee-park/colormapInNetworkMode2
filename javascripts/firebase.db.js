@@ -13,8 +13,6 @@ function writeData () {
   database.ref('userTest3/' + TEST_DATA.u_id).set(TEST_DATA);
 }
 
-downloadCSV2();
-
 function downloadCSV () {
   console.log('downloadCSV');
   database
