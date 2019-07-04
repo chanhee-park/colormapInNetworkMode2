@@ -14,7 +14,7 @@ function writeData () {
 }
 
 function downloadCSV () {
-  console.log('downloadCSV');
+  console.log('DownloadCSV1');
   database
     .ref('/userTest3')
     .once('value')
@@ -66,7 +66,7 @@ function downloadCSV () {
           });
         }
       });
-      return;
+      const csv = arrayToCSV(retArr);
       console.log(csv);
     });
 }
