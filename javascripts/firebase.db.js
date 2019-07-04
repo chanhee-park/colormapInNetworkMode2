@@ -13,8 +13,10 @@ function writeData () {
   database.ref('userTest3/' + TEST_DATA.u_id).set(TEST_DATA);
 }
 
+downloadCSV2();
+
 function downloadCSV () {
-  console.log('Download');
+  console.log('downloadCSV');
   database
     .ref('/userTest3')
     .once('value')
@@ -42,8 +44,8 @@ function downloadCSV () {
       ];
       retArr.push(colName);
       _.forEach(testResults, r => {
-        _.forEach(r.test, t => {
-          if (r.u_loginTime > 1561912032240) {
+        if (r.u_loginTime > 1561912032240) {
+          _.forEach(r.test, t => {
             const row = [];
             row.push(new Date(r.u_loginTime).toString());
             row.push(r.u_id);
@@ -63,10 +65,10 @@ function downloadCSV () {
             row.push(t.compare1Value < t.compare2Value ? t.compare2Value : t.compare1Value);
             row.push(t.compare1Value < t.compare2Value ? t.compare1Value : t.compare2Value);
             retArr.push(row);
-          }
-        });
+          });
+        }
       });
-      const csv = arrayToCSV(retArr);
+      return;
       console.log(csv);
     });
 }
@@ -98,8 +100,8 @@ function downloadCSV2 () {
       ];
       const retColection = [];
       _.forEach(testResults, r => {
-        _.forEach(r.test, t => {
-          if (r.u_loginTime > 1558931483610) {
+        if (r.u_loginTime > 1561912032240) {
+          _.forEach(r.test, t => {
             const row = {};
             row.created_time = (new Date(r.u_loginTime).toString())
             row.u_id = (r.u_id);
@@ -113,8 +115,8 @@ function downloadCSV2 () {
             row.isCorrect = (t.isCorrect);
             row.elapsedTime = (t.elapsedTime);
             retColection.push(row);
-          }
-        });
+          });
+        }
       });
       const retArr = [];
       retArr.push(colName);
