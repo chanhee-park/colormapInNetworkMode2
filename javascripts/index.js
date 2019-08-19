@@ -5,6 +5,13 @@ const t_questions = [
   ['dolphins', 'deg_log', 'prtogn', 0.15],
 ];
 
+/*** TEST START : 첫 화면(로그인)에 네트워크 테스크도 함께 띄우기 ***/
+setTimeout(() => {
+  const q = t_questions[0];
+  drawGraph(q[0], q[1], q[2], q[3], 0, 'tutorial'); // data, cnet, color, span
+}, 1000);
+/*** TEST END : 첫 화면(로그인)에 네트워크 테스크도 함께 띄우기 ***/
+
 const TEST_RESULT = [];
 
 function Start () {
