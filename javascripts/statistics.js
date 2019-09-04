@@ -9,12 +9,9 @@ async function main() {
     const dataset = await getDataset();
     const conditions = getConditionList(datanames, centralities, spans)
 
-    console.log(conditions);
-    console.log(dataset[0]);
-
     _.forEach(colormaps, colormap => {
         _.forEach(conditions, condition => {
-            console.log(colormap, condition);
+            console.log(colormap, condition[0].value, condition[1].value, condition[2].value);
             const filltered = getConditioned(dataset, condition, `${colormap}_t`);
             console.log(filltered);
             // 색, 데이터, 중심성, 스팬 별로 데이터 필터링 완료
@@ -24,7 +21,6 @@ async function main() {
             // TODO: 그리기
         })
     })
-
 }
 
 /**
