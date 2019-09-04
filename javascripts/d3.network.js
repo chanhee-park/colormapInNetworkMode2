@@ -190,7 +190,10 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
     drawRectNode(C2, 'source');
     drawNode(T, 'target');
 
-    // showDebugText(T, C1, C2);
+    /*** TEST START : 노드 값 디버그 텍스트 띄우기 */
+    showDebugText(T, C1, C2);
+    /*** TEST END : 노드 값 디버그 텍스트 띄우기 */
+
     showNodeInLegend(C1, 'r');
     showNodeInLegend(C2, 'r');
     showNodeInLegend(T, 'c');
@@ -210,24 +213,26 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
     let w_ratio = svgHTML.width.baseVal.value / 300;
     const color = getColorString(virtualCentrality);
 
-    // if (type === 'r') {
-    //   legendSvg.append('rect').attrs({
-    //     x: legendX + relative * 255 * w_ratio,
-    //     y: legendY + legendSize + 5,
-    //     width: 25,
-    //     height: 25,
-    //     fill: color,
-    //     stroke: '#000'
-    //   });
-    // } else if (type === 'c') {
-    //   legendSvg.append('circle').attrs({
-    //     cx: legendX + relative * 255 * w_ratio + 13,
-    //     cy: legendY + legendSize + 5 + 13,
-    //     r: 13,
-    //     fill: color,
-    //     stroke: '#000'
-    //   });
-    // }
+    /*** TEST START : 컬러 레전드에 노드의 위치 보여주기 ***/
+    if (type === 'r') {
+      legendSvg.append('rect').attrs({
+        x: legendX + relative * 255 * w_ratio,
+        y: legendY + legendSize + 5,
+        width: 25,
+        height: 25,
+        fill: color,
+        stroke: '#000'
+      });
+    } else if (type === 'c') {
+      legendSvg.append('circle').attrs({
+        cx: legendX + relative * 255 * w_ratio + 13,
+        cy: legendY + legendSize + 5 + 13,
+        r: 13,
+        fill: color,
+        stroke: '#000'
+      });
+      /*** TEST END : 컬러 레전드에 노드의 위치 보여주기 ***/
+    }
   }
 
   function showDebugText (T, C1, C2) {
