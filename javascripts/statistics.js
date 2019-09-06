@@ -1,26 +1,29 @@
 main();
 
-async function main() {
-    const datanames = ['lesmis', 'football', 'jazz'];
-    const centralities = ['page', 'random'];
-    const spans = [0.15, 0.40];
-    const colormaps = ['blue', 'divergent', 'rainbow', 'viridis'];
+async function main () {
+  const datanames = ['lesmis', 'football', 'jazz'];
+  const centralities = ['page', 'random'];
+  const colormaps = ['blue', 'RdYlBu', 'jet', 'viridis'];
+  const spans = [0.15, 0.40];
+  const valueArea = [0, 1, 2];
 
-    const dataset = await getDataset();
-    const conditions = getConditionList(datanames, centralities, spans)
+  const dataset = await getDataset();
+  const conditions = getConditionList(datanames, centralities, colormaps, spans, valueArea)
+  console.log(dataset);
 
-    _.forEach(colormaps, colormap => {
-        _.forEach(conditions, condition => {
-            console.log(colormap, condition[0].value, condition[1].value, condition[2].value);
-            const filltered = getConditioned(dataset, condition, `${colormap}_t`);
-            console.log(filltered);
-            // 색, 데이터, 중심성, 스팬 별로 데이터 필터링 완료
-            // TODO: 각 필터된 애들 별로 부트스트랩 진행
-            // TODO: 값이 높고 낮은 정도에 따라 나누기
-            // TODO: 각각 평균과 표준편차 구하기
-            // TODO: 그리기
-        })
-    })
+  _.forEach(conditions, condition => {
+    console.log(condition[0].value, condition[1].value, condition[2].value, condition[3].value, condition[4].value);
+    const filltered = getConditioned(dataset, condition, 'nodeValue');
+    console.log(filltered);
+    const bootstraped = bootstrap(filltered, 1000);
+    // console.log(bootstraped)
+
+    //     // 색, 데이터, 중심성, 스팬 별로 데이터 필터링 완료
+    //     // TODO: 값이 높고 낮은 정도에 따라 나누기 : Problem - 값이 대부분 비슷해서 구간을 나눌 수 없다.
+    //     // TODO: 각각 평균과 표준편차 구하기
+    //     // TODO: 그리기
+  })
+
 }
 
 /**
@@ -29,15 +32,15 @@ async function main() {
  * @param {Array} data 
  * @param {number} numOfSamples 
  */
-function bootstrap(data, numOfSamples) {
-    const numOfInstances = data.length;
-    const bootstrapedSamples = []
-    for (let i = 0; i < numOfSamples; i++) {
-        const randomIdx = getRandomInteger(0, numOfInstances - 1);
-        const instance = data[randomIdx];
-        bootstrapedSamples.push(instance);
-    }
-    return bootstrapedSamples;
+function bootstrap (data, numOfSamples) {
+  const numOfInstances = data.length;
+  const bootstrapedSamples = []
+  for (let i = 0; i < numOfSamples; i++) {
+    const randomIdx = getRandomInteger(0, numOfInstances - 1);
+    const instance = data[randomIdx];
+    bootstrapedSamples.push(instance);
+  }
+  return bootstrapedSamples;
 }
 
 /**
@@ -45,42 +48,50 @@ function bootstrap(data, numOfSamples) {
  * @param {number} min The minimum integer of random number
  * @param {number} max The maximum integer of random number
  */
-function getRandomInteger(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomInteger (min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // test function
-function testBootstrap() {
-    data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-    cnt = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    for (let i = 0; i < 1000; i++) {
-        const bt = bootstrap(data, 100);
-        for (let sample of bt) {
-            cnt[sample] += 1;
-        }
+function testBootstrap () {
+  data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+  cnt = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  for (let i = 0; i < 1000; i++) {
+    const bt = bootstrap(data, 100);
+    for (let sample of bt) {
+      cnt[sample] += 1;
     }
-    console.log(cnt);
+  }
+  console.log(cnt);
 }
 
-async function getDataset() {
-    return await d3.csv("./data/test_colormap.csv",
-        function(d) {
-            return {
-                data: d['data'],
-                centrality: d['NodeAttributes'],
-                span: d['span'],
-                blue_c: d['blue-c'],
-                blue_t: d['blue-t'] * 1,
-                divergent_c: d['divergent-c'],
-                divergent_t: d['divergent-t'] * 1,
-                rainbow_c: d['rainbow-c'],
-                rainbow_t: d['rainbow-t'] * 1,
-                viridis_c: d['viridis-c'],
-                viridis_t: d['viridis-t'] * 1,
-            }
-        });
+async function getDataset () {
+  return await d3.csv("./data/test_colormap(1).csv", d => {
+    const leftCls = Math.abs(d['TargetNode_value'] - d['ComparisonNode_left']);
+    const rightCls = Math.abs(d['TargetNode_value'] - d['ComparisonNode_right']);
+    const correctNodeValue = leftCls < rightCls ? d['ComparisonNode_left'] : d['ComparisonNode_right'];
+    let valueArea = Math.floor(correctNodeValue * 3);
+    valueArea = valueArea < 0 ? 0 : valueArea;
+    valueArea = valueArea > 2 ? 2 : valueArea;
+    const colormapNames = {
+      'single_blue': 'blue',
+      'viridis': 'viridis',
+      'jet': 'jet',
+      'red_blue': 'RdYlBu'
+    }
+    return {
+      dataname: d['data'],
+      centrality: d['NodeAttributes'],
+      nodeValue: correctNodeValue,
+      colormap: colormapNames[d['colormap']],
+      span: d['span'] * 1,
+      valueArea: valueArea,
+      time: d['time'] * 1,
+      correctness: d['isCorrect'],
+    }
+  });
 }
 
 /**
@@ -97,38 +108,45 @@ async function getDataset() {
  * getConditioned(array, conditions, key) 
  * // It returns [26, 24] 
  */
-function getConditioned(arr, conditions, key) {
-    const ret = []
-    for (let i = 0; i < arr.length; i++) {
-        const elem = arr[i];
-        let cnt = 0;
-        for (let j = 0; j < conditions.length; j++) {
-            const cond = conditions[j];
-            if (elem[cond.key] == cond.value) cnt++;
-        }
-        if (cnt === conditions.length) ret.push(elem[key]);
+function getConditioned (arr, conditions, key) {
+  const ret = []
+  for (let i = 0; i < arr.length; i++) {
+    const elem = arr[i];
+    let cnt = 0;
+    for (let j = 0; j < conditions.length; j++) {
+      const cond = conditions[j];
+      if (elem[cond.key] == cond.value) cnt++;
     }
-    return ret;
+    if (cnt === conditions.length) ret.push(elem[key]);
+  }
+  return ret;
 }
 
 /**
  * 조건 목록(조합)을 반환합니다.
  * @param {*} datanames 
- * @param {*} centralities 
+ * @param {*} centralities
+ * @param {*} colormaps
  * @param {*} spans 
  */
-function getConditionList(datanames, centralities, spans) {
-    const conditions = [];
-    _.forEach(datanames, dataname => {
-        _.forEach(centralities, cent => {
-            _.forEach(spans, span => {
-                conditions.push([
-                    { key: 'data', value: dataname },
-                    { key: 'centrality', value: cent },
-                    { key: 'span', value: span },
-                ]);
-            });
-        });
+function getConditionList (datanames, centralities, colormaps, spans, valueAreas) {
+  const conditions = [];
+  _.forEach(datanames, dataname => {
+    _.forEach(centralities, cent => {
+      _.forEach(colormaps, colormap => {
+        _.forEach(spans, span => {
+          _.forEach(valueAreas, a => {
+            conditions.push([
+              { key: 'dataname', value: dataname },
+              { key: 'centrality', value: cent },
+              { key: 'colormap', value: colormap },
+              { key: 'span', value: span },
+              { key: 'valueArea', value: a }
+            ]);
+          })
+        })
+      })
     });
-    return conditions;
+  });
+  return conditions;
 }
