@@ -2,10 +2,13 @@ const Constant = {
   that: this,
   // https://github.com/d3/d3-scale-chromatic
   colorMaps: {
+    blue: d3.interpolateBlues,
     single_blue: d3.interpolateBlues,
+    RdYlBu: d3.interpolateRdYlBu,
     red_blue: d3.interpolateRdYlBu,
     viridis: d3.interpolateViridis,
     jet: Color.matplotlibJet,
+    matlabJet: Color.matlabJet,
 
     single_oranges: d3.interpolateOranges,
     prtogn: d3.interpolatePRGn,
