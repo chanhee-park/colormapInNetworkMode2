@@ -191,12 +191,12 @@ function drawGraph (dataName, refCentrality, colorMapName, span, testIdx, mode) 
     drawNode(T, 'target');
 
     /*** TEST START : 노드 값 디버그 텍스트 띄우기 */
-    showDebugText(T, C1, C2);
+    // showDebugText(T, C1, C2);
     /*** TEST END : 노드 값 디버그 텍스트 띄우기 */
 
-    showNodeInLegend(C1, 'r');
-    showNodeInLegend(C2, 'r');
-    showNodeInLegend(T, 'c');
+    // showNodeInLegend(C1, 'r');
+    // showNodeInLegend(C2, 'r');
+    // showNodeInLegend(T, 'c');
   }
 
   function showNodeInLegend (node, type) {
